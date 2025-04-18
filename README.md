@@ -12,6 +12,7 @@ A debugger tool with mainly in-game menus and lots of configuration. There are s
 
 ## Usage
 In-game: say /gmod-debugger to open the main menu
+
 From Console (generating log files only): see console commands (coming soon)
 
 ## Installation
@@ -22,3 +23,5 @@ From Console (generating log files only): see console commands (coming soon)
 5. You are all set.
 
 The debugger can be turned off entirely in the autorun init.lua. Simply change the true to false.
+
+The generated log files will come out at the created gmod-debugger directory in garrysmod/data.
