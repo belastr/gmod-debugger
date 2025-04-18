@@ -1,0 +1,40 @@
+local debugger = true // change this to 'false' if you want the debugger to not run at all
+
+if SERVER && debugger then
+    local col = Color(88, 101, 242)
+    local function MsgD(msg)
+        MsgC(col, "# ", color_white, msg, "\n")
+    end
+    local function MsgE(msg)
+        MsgC(col, "# ", Color(255, 0, 0), msg, "\n")
+        MsgC(col, "#####################<\n")
+    end
+
+    MsgC(col, "### gmod-debugger ###>\n")
+    MsgD("initialising")
+    MsgD("")
+
+    MsgD("loading debugger core")
+    AddCSLuaFile("gmod-debugger/init.lua")
+    include("gmod-debugger/init.lua")
+    MsgD("completed debugger core")
+    MsgD("")
+
+    MsgD("loading debugger config")
+    local config = file.Read("gmod-debugger/config.json")
+    if !config then MsgE("ERROR: config file at garrysmod/data/gmod-debugger/config.json was not found, aborting") return end
+    MsgD("")
+
+    config = util.JSONToTable(config, false, true)
+
+    MsgD("loading debugger modules")
+    for _, mod in ipairs(config.enabledModules) do
+        MsgC(color_white, "attempting to load module: ", mod)
+        AddCSLuaFile("gmod-debugger/modules/" .. mod .. "/init.lua")
+        include("gmod-debugger/modules/" .. mod .. "/init.lua")
+    end
+    MsgD("completed debugger modules")
+    MsgD("")
+
+    MsgC(col, "#####################<\n")
+end
