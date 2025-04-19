@@ -1,3 +1,6 @@
+GMOD_DEBUGGER = {}
+GMOD_DEBUGGER.logs = {}
+
 if CLIENT then
     for _, f in ipairs(file.Find("lua/gmod-debugger/derma/*.lua", "DATA")) do
         AddCSLuaFile("gmod-debugger/derma/" .. f)

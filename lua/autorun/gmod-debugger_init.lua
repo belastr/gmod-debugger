@@ -1,6 +1,6 @@
-local debugger = true // change this to 'false' if you want the debugger to not run at all
+GMOD_DEBUGGER = true // change this to 'false' if you want the debugger to not run at all
 
-if SERVER && debugger then
+if SERVER && GMOD_DEBUGGER then
     local col = Color(88, 101, 242)
     local function MsgD(msg)
         MsgC(col, "# ", color_white, msg, "\n")
@@ -25,7 +25,7 @@ if SERVER && debugger then
     if !config then MsgE("ERROR: config file at garrysmod/data/gmod-debugger/config.json was not found, aborting") return end
     MsgD("")
 
-    config = util.JSONToTable(config, false, true)
+    GMOD_DEBUGGER.config = util.JSONToTable(config, false, true)
 
     MsgD("loading debugger modules")
     for _, mod in ipairs(config.enabledModules) do
