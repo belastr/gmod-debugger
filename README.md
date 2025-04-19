@@ -17,11 +17,10 @@ From Console (generating log files only): see console commands (coming soon)
 
 ## Installation
 1. Download one of the releases.
-2. Put the gmod-debugger folder into garrysmod/addons.
-3. Create a gmod-debugger directory in garrysmod/data and put the config.json inside.
-4. (You can do some config in the json file directly, but all configuration is always available in-game)
-5. You are all set.
+2. Put the gmod-debugger folder into garrysmod/addons/.
+3. (In case you already have made a configuration set: Create a gmod-debugger directory in garrysmod/data/ and put the config.json inside.)
+4. You are all set.
 
 The debugger can be turned off entirely in the autorun init.lua. Simply change the true to false.
 
-The generated log files will come out at the created gmod-debugger directory in garrysmod/data.
+The generated log files will come out at the created gmod-debugger directory in garrysmod/data/.
