@@ -5,6 +5,7 @@ if !GMOD_DEBUGGER.config.error then
     GMOD_DEBUGGER.config.error.client = false
     GMOD_DEBUGGER.config.error.clients = {}
     GMOD_DEBUGGER.config.error.server = true
+    GMOD_DEBUGGER.config.error.stack = true
     GMOD_DEBUGGER.config.error.post = false
 end
 
