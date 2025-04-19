@@ -2,11 +2,13 @@ GMOD_DEBUGGER = GMOD_DEBUGGER || true // change this to 'false' if you want the 
 
 if CLIENT && GMOD_DEBUGGER then
     include("gmod-debugger/init.lua")
+    hook.Add("InitPostEntity", "gmod-debugger:init", function()
     GMOD_DEBUGGER:RequestConfig()
 
     for _, mod in ipairs(GMOD_DEBUGGER.config.enabledModules) do
         include("gmod-debugger/modules/" .. mod .. "/init.lua")
     end
+    end)
 elseif SERVER && GMOD_DEBUGGER then
     local col = Color(88, 101, 242)
     local function MsgD(msg)
