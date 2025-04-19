@@ -2,6 +2,8 @@ util.AddNetworkString("gmod-debugger:menu")
 util.AddNetworkString("gmod-debugger:config")
 
 function GMOD_DEBUGGER:SynchronizeConfig(ply, unreliable)
+    if !GMOD_DEBUGGER.config then return end
+
     local configData = util.Compress(util.TableToJSON(GMOD_DEBUGGER.config))
 
     net.Start("gmod-debugger:config", unreliable || false)
