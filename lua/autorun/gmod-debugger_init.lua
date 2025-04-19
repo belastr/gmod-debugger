@@ -15,9 +15,8 @@ elseif SERVER && GMOD_DEBUGGER then
     local function MsgD(msg)
         MsgC(col, "# ", color_white, msg, "\n")
     end
-    local function MsgE(msg)
-        MsgC(col, "# ", Color(255, 0, 0), msg, "\n")
-        MsgC(col, "#####################<\n")
+    local function MsgW(msg)
+        MsgC(col, "# ", Color(242, 101, 88), "WARNING: ", msg, "\n")
     end
 
     MsgC(col, "### gmod-debugger ###>\n")
@@ -32,7 +31,14 @@ elseif SERVER && GMOD_DEBUGGER then
 
     MsgD("loading debugger config")
     local config = file.Read("gmod-debugger/config.json")
-    if !config then MsgE("ERROR: config file at garrysmod/data/gmod-debugger/config.json was not found, aborting") return end
+    if !config then
+        config = util.TableToJSON({enabledModules = {"error"}}, true)
+        if !file.Exists("gmod-debugger", "DATA") then file.CreateDir("gmod-debugger") end
+        file.Write("gmod-debugger/config.json", config)
+        MsgW("config file at garrysmod/data/gmod-debugger/config.json was not found, creating default") 
+    else
+        MsgD("config file found")
+    end
     MsgD("")
 
     GMOD_DEBUGGER.config = util.JSONToTable(config, false, true)
