@@ -1,6 +1,13 @@
-GMOD_DEBUGGER = true // change this to 'false' if you want the debugger to not run at all
+GMOD_DEBUGGER = GMOD_DEBUGGER || true // change this to 'false' if you want the debugger to not run at all
 
-if SERVER && GMOD_DEBUGGER then
+if CLIENT && GMOD_DEBUGGER then
+    include("gmod-debugger/init.lua")
+    GMOD_DEBUGGER:RequestConfig()
+
+    for _, mod in ipairs(GMOD_DEBUGGER.config.enabledModules) do
+        include("gmod-debugger/modules/" .. mod .. "/init.lua")
+    end
+elseif SERVER && GMOD_DEBUGGER then
     local col = Color(88, 101, 242)
     local function MsgD(msg)
         MsgC(col, "# ", color_white, msg, "\n")
@@ -28,8 +35,8 @@ if SERVER && GMOD_DEBUGGER then
     GMOD_DEBUGGER.config = util.JSONToTable(config, false, true)
 
     MsgD("loading debugger modules")
-    for _, mod in ipairs(config.enabledModules) do
-        MsgC(color_white, "attempting to load module: ", mod)
+    for _, mod in ipairs(GMOD_DEBUGGER.config.enabledModules) do
+        MsgD("attempting to load module: " .. mod)
         AddCSLuaFile("gmod-debugger/modules/" .. mod .. "/init.lua")
         include("gmod-debugger/modules/" .. mod .. "/init.lua")
     end
