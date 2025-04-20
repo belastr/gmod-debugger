@@ -1,4 +1,6 @@
-net.Receive("gmod-debugger:menu", function() end)
+net.Receive("gmod-debugger:menu", function()
+    local frame = vgui.Create("DebuggerFrame")
+end)
 
 function GMOD_DEBUGGER:RequestConfig()
     net.Start("gmod-debugger:config")
