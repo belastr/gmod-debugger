@@ -7,6 +7,17 @@ function GMOD_DEBUGGER:RequestConfig()
     net.SendToServer()
 end
 
+function GMOD_DEBUGGER:SendLog(mod, log)
+    log = util.Compress(util.TableToJSON(log))
+    local log_len = #log
+
+    net.Start("gmod-debugger:log")
+    net.WriteString(mod)
+    net.WriteUInt(log_len, 16)
+    net.WriteData(log, log_len)
+    net.SendToServer()
+end
+
 net.Receive("gmod-debugger:config", function(len)
     local configData = net.ReadData(len / 8)
     GMOD_DEBUGGER.config = util.JSONToTable(util.Decompress(configData), false, true)
