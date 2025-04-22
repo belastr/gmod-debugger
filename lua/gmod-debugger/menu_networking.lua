@@ -27,6 +27,22 @@ function GMOD_DEBUGGER:SaveLog(mod, log)
     hook.Run("gmod-debugger:saveLog", mod, log)
 end
 
+function GMOD_DEBUGGER:InitModule(mod, cfg)
+    GMOD_DEBUGGER.logs[mod] = {}
+
+    GMOD_DEBUGGER.options[mod] = {}
+    for c, d in pairs(cfg) do
+        GMOD_DEBUGGER.options[mod][c] = d[1]
+    end
+
+    if GMOD_DEBUGGER.config[mod] then return end
+
+    GMOD_DEBUGGER.config[mod] = {}
+    for c, d in pairs(cfg) do
+        GMOD_DEBUGGER.config[mod][c] = d[2]
+    end
+end
+
 net.Receive("gmod-debugger:config", function(len, ply)
     if len < 1 then
         GMOD_DEBUGGER:SynchronizeConfig(ply)
