@@ -27,10 +27,26 @@ function PANEL:Init()
     self.lblTitle:SetFont("CreditsText")
     self.lblTitle:SetTextColor(Color(242, 249, 255))
 
+    self.pathHome = vgui.Create("DButton", self)
+    self.pathHome:SetFont("Default")
+    self.pathHome:SetText("Home")
+    self.pathHome.DoClick = function() self:SetPath("Home") end
+    self.pathHome.Paint = function(btn)
+        if btn:IsHovered() then
+            btn:SetTextColor(Color(0, 130, 255))
+        else
+            btn:SetTextColor(Color(255, 255, 255, 153))
+        end
+    end
+
+    self.btnsPath = vgui.Create("Panel", self)
+
     self:SetSize(ScrW() / 2, ScrH() / 1.5)
     self:Center()
     self:SetTitle("gmod-debugger")
     self:MakePopup()
+
+    self:SetPath("Home/error/logs")
 end
 
 function PANEL:Think()
@@ -62,8 +78,6 @@ function PANEL:Paint(w, h)
 
     surface.SetDrawColor(33, 33, 33)
     surface.DrawRect(0, 0, w, 48)
-
-    draw.SimpleText("Home / gmod-debugger", "Default", 20, 70, Color(178, 178, 178))
 end
 
 function PANEL:OnMousePressed()
@@ -84,6 +98,67 @@ function PANEL:PerformLayout()
 
     self.btnBrowse:SetPos(0, 0)
     self.btnBrowse:SetSize(48, 48)
+
+    self.pathHome:SetPos(20, 70)
+    self.pathHome:SetTall(12)
+    self.pathHome:SizeToContentsX()
+
+    self.btnsPath:SetPos(20 + self.pathHome:GetWide(), 70)
+    self.btnsPath:SetSize(self:GetWide() - 40 - self.pathHome:GetWide(), 12)
+end
+
+function PANEL:SetPath(path)
+    self.btnsPath:Clear()
+    if path == "Home" then
+        local slash = vgui.Create("DLabel", self.btnsPath)
+        slash:Dock(LEFT)
+        slash:SetFont("Default")
+        slash:SetTextColor(Color(255, 255, 255, 153))
+        slash:SetText(" / ")
+        slash:SizeToContentsX()
+        
+        local btnHome = vgui.Create("DButton", self.btnsPath)
+        btnHome:Dock(LEFT)
+        btnHome:SetFont("Default")
+        btnHome:SetTextColor(color_white)
+        btnHome:SetText("gmod-debugger")
+        btnHome:SizeToContentsX()
+        btnHome.DoClick = function() self:SetPath("Home") end
+        btnHome.Paint = function() end
+    else
+        local pathTbl, pathString = string.Explode("/", path), "Home"
+        for i, p in ipairs(pathTbl) do
+            if p == "Home" then continue end
+            pathString = pathString .. "/" .. p
+            local str = pathString
+
+            local slash = vgui.Create("DLabel", self.btnsPath)
+            slash:Dock(LEFT)
+            slash:SetFont("Default")
+            slash:SetTextColor(Color(255, 255, 255, 153))
+            slash:SetText(" / ")
+            slash:SizeToContentsX()
+            
+            local btn = vgui.Create("DButton", self.btnsPath)
+            btn:Dock(LEFT)
+            btn:SetFont("Default")
+            btn:SetText(p)
+            btn:SizeToContentsX()
+            btn.DoClick = function() self:SetPath(str) end
+            if i == #pathTbl then
+                btn:SetTextColor(color_white)
+                btn.Paint = function() end
+            else
+                btn.Paint = function(b)
+                    if b:IsHovered() then
+                        b:SetTextColor(Color(0, 130, 255))
+                    else
+                        b:SetTextColor(Color(255, 255, 255, 153))
+                    end
+                end
+            end
+        end
+    end
 end
 
 vgui.Register("DebuggerFrame", PANEL, "DFrame")
