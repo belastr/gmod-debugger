@@ -26,3 +26,8 @@ net.Receive("gmod-debugger:config", function(len)
         include("gmod-debugger/modules/" .. mod .. "/init.lua")
     end
 end)
+
+net.Receive("gmod-debugger:options", function(len)
+    local optionsData = net.ReadData(len / 8)
+    GMOD_DEBUGGER.options = util.JSONToTable(util.Decompress(optionsData), false, true)
+end)

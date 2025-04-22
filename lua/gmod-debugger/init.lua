@@ -1,5 +1,6 @@
 GMOD_DEBUGGER = {}
 GMOD_DEBUGGER.logs = {}
+GMOD_DEBUGGER.options = {}
 
 if CLIENT then
     for _, f in ipairs(file.Find("gmod-debugger/derma/*.lua", "LUA")) do

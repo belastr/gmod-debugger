@@ -1,5 +1,6 @@
 util.AddNetworkString("gmod-debugger:menu")
 util.AddNetworkString("gmod-debugger:config")
+util.AddNetworkString("gmod-debugger:options")
 util.AddNetworkString("gmod-debugger:log")
 
 function GMOD_DEBUGGER:SynchronizeConfig(ply, unreliable)
@@ -10,6 +11,16 @@ function GMOD_DEBUGGER:SynchronizeConfig(ply, unreliable)
     net.Start("gmod-debugger:config", unreliable || false)
     net.WriteData(configData, #configData)
     net.Send(ply || player.GetHumans())
+end
+
+function GMOD_DEBUGGER:SendOptions(ply)
+    if !GMOD_DEBUGGER.options then return end
+
+    local optionsData = util.Compress(util.TableToJSON(GMOD_DEBUGGER.options))
+
+    net.Start("gmod-debugger:options")
+    net.WriteData(optionsData, #optionsData)
+    net.Send(ply)
 end
 
 function GMOD_DEBUGGER:SaveLog(mod, log)
