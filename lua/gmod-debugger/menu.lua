@@ -2,8 +2,11 @@ net.Receive("gmod-debugger:menu", function()
     local frame = vgui.Create("DebuggerFrame")
 end)
 
-function GMOD_DEBUGGER:RequestConfig()
+function GMOD_DEBUGGER:RequestConfig(init)
     net.Start("gmod-debugger:config")
+    if init then
+        net.WriteBit(1)
+    end
     net.SendToServer()
 end
 

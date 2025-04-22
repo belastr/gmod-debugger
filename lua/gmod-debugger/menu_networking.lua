@@ -3,12 +3,12 @@ util.AddNetworkString("gmod-debugger:config")
 util.AddNetworkString("gmod-debugger:options")
 util.AddNetworkString("gmod-debugger:log")
 
-function GMOD_DEBUGGER:SynchronizeConfig(ply, unreliable)
+function GMOD_DEBUGGER:SynchronizeConfig(ply)
     if !GMOD_DEBUGGER.config then return end
 
     local configData = util.Compress(util.TableToJSON(GMOD_DEBUGGER.config))
 
-    net.Start("gmod-debugger:config", unreliable || false)
+    net.Start("gmod-debugger:config")
     net.WriteData(configData, #configData)
     net.Send(ply || player.GetHumans())
 end
@@ -30,7 +30,10 @@ end
 net.Receive("gmod-debugger:config", function(len, ply)
     if len < 1 then
         GMOD_DEBUGGER:SynchronizeConfig(ply)
-        return
+    elseif len == 1 then
+        GMOD_DEBUGGER:SynchronizeConfig(ply)
+        GMOD_DEBUGGER:SendOptions(ply)
+        local r = net.ReadBit()
     end
 end)
 
