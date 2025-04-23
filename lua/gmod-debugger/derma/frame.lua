@@ -15,7 +15,14 @@ function PANEL:Init()
 
     self.btnBrowse = vgui.Create("DButton", self)
     self.btnBrowse:SetText("")
-    self.btnBrowse.DoClick = function() end
+    self.btnBrowse.DoClick = function()
+        Derma_StringRequest(
+            "browser",
+            "input path",
+            "Home",
+            function(text) self:SetPath(text) end
+        )
+    end
     self.btnBrowse.Paint = function()
         draw.RoundedBox(4, 8, 8, 32, 32, Color(0, 130, 255))
         surface.SetDrawColor(color_white)
