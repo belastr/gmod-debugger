@@ -2,6 +2,7 @@ util.AddNetworkString("gmod-debugger:menu")
 util.AddNetworkString("gmod-debugger:config")
 util.AddNetworkString("gmod-debugger:options")
 util.AddNetworkString("gmod-debugger:log")
+util.AddNetworkString("gmod-debugger:logs")
 
 function GMOD_DEBUGGER:SynchronizeConfig(ply)
     if !GMOD_DEBUGGER.config then return end
@@ -58,4 +59,16 @@ net.Receive("gmod-debugger:log", function()
     local log = util.JSONToTable(util.Decompress(net.ReadData(log_len)), false, true)
 
     GMOD_DEBUGGER:SaveLog(mod, log)
+end)
+
+net.Receive("gmod-debugger:logs", function(_, ply)
+    local mod = net.ReadString()
+    local logs = util.Compress(util.TableToJSON(GMOD_DEBUGGER.logs[mod]))
+    local logs_len = #logs
+
+    net.Start("gmod-debugger:log")
+    net.WriteString(mod)
+    net.WriteUInt(logs_len, 16)
+    net.WriteData(logs, logs_len)
+    net.Send(ply)
 end)

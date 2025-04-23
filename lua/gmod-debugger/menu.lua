@@ -62,3 +62,11 @@ net.Receive("gmod-debugger:options", function(len)
     local optionsData = net.ReadData(len / 8)
     GMOD_DEBUGGER.options = util.JSONToTable(util.Decompress(optionsData), false, true)
 end)
+
+net.Receive("gmod-debugger:log", function(len)
+    local mod, logs_len = net.ReadString(), net.ReadUInt(16)
+    local logs = net.ReadData(logs_len)
+    GMOD_DEBUGGER.logs[mod] = util.JSONToTable(util.Decompress(logs), false, true)
+
+    hook.Run("gmod-debugger:log", mod)
+end)
