@@ -40,13 +40,12 @@ function PANEL:Init()
     end
 
     self.btnsPath = vgui.Create("Panel", self)
+    self.page = vgui.Create("DebuggerPage", self)
 
     self:SetSize(ScrW() / 2, ScrH() / 1.5)
     self:Center()
     self:SetTitle("gmod-debugger")
     self:MakePopup()
-
-    self:SetPath("Home/error/logs")
 end
 
 function PANEL:Think()
@@ -105,6 +104,9 @@ function PANEL:PerformLayout()
 
     self.btnsPath:SetPos(20 + self.pathHome:GetWide(), 70)
     self.btnsPath:SetSize(self:GetWide() - 40 - self.pathHome:GetWide(), 12)
+
+    self.page:SetPos(20, 122)
+    self.page:SetSize(self:GetWide() - 40, self:GetTall() - 122)
 end
 
 function PANEL:SetPath(path)
@@ -159,6 +161,7 @@ function PANEL:SetPath(path)
             end
         end
     end
+    hook.Run("gmod-debugger:page", self.page, path)
 end
 
 vgui.Register("DebuggerFrame", PANEL, "DFrame")

@@ -1,5 +1,33 @@
 net.Receive("gmod-debugger:menu", function()
     local frame = vgui.Create("DebuggerFrame")
+    frame:SetPath("Home/error/config")
+end)
+
+hook.Add("gmod-debugger:page", "gmod-debugger:menu", function(panel, path)
+    local pathTbl = string.Explode("/", path)
+    if #pathTbl >= 3 then
+        if pathTbl[3] == "config" then
+            panel:Clear()
+            for o, d in SortedPairs(GMOD_DEBUGGER.options[pathTbl[2]]) do
+                local btnConfig = vgui.Create("DebuggerConfig" .. d, panel)
+                btnConfig:SetText("#" .. pathTbl[2] .. "." .. o)
+                btnConfig:SetValue(GMOD_DEBUGGER.config[pathTbl[2]][o])
+            end
+        elseif pathTbl[3] == "logs" then
+            panel:Clear()
+            hook.Run("gmod-debugger:logs", pathTbl[2], panel)
+        end
+    elseif #pathTbl == 2 then
+        panel:Clear()
+        local title = vgui.Create("DLabel", panel)
+        title:Dock(TOP)
+        title:SetText(pathTbl[2])
+    elseif path == "Home" then
+        panel:Clear()
+        local title = vgui.Create("DLabel", panel)
+        title:Dock(TOP)
+        title:SetText("gmod-debugger")
+    end
 end)
 
 function GMOD_DEBUGGER:RequestConfig(init)
