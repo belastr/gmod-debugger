@@ -11,6 +11,12 @@ function PANEL:Init()
     self.btn:SetText("")
     self.btn.DoClick = function()
         self.value = !self.value
+        net.Start("gmod-debugger:config")
+        net.WriteString("Bool")
+        net.WriteString(self.module)
+        net.WriteString(self.option)
+        net.WriteBool(self.value)
+        net.SendToServer()
     end
     self.btn.Paint = function(_, w)
         if self.value then
@@ -35,6 +41,14 @@ end
 
 function PANEL:SetText(txt)
     self.text:SetText(txt)
+end
+
+function PANEL:SetModule(mod)
+    self.module = mod
+end
+
+function PANEL:SetOption(opt)
+    self.option = opt
 end
 
 vgui.Register("DebuggerConfigBool", PANEL, "Panel")

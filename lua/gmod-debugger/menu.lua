@@ -13,6 +13,8 @@ hook.Add("gmod-debugger:page", "gmod-debugger:menu", function(panel, path)
                 local btnConfig = vgui.Create("DebuggerConfig" .. d, panel)
                 btnConfig:SetText("#" .. pathTbl[2] .. "." .. o)
                 btnConfig:SetValue(GMOD_DEBUGGER.config[pathTbl[2]][o])
+                btnConfig:SetModule(pathTbl[2])
+                btnConfig:SetOption(o)
             end
         elseif pathTbl[3] == "logs" then
             panel:Clear()

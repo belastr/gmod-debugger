@@ -14,6 +14,17 @@ function GMOD_DEBUGGER:SynchronizeConfig(ply)
     net.Send(ply || player.GetHumans())
 end
 
+timer.Create("gmod-debugger:config", 5, 0, function()
+    GMOD_DEBUGGER:SynchronizeConfig()
+    timer.Stop("gmod-debugger:config")
+end)
+timer.Stop("gmod-debugger:config")
+
+function GMOD_DEBUGGER:SetConfig(ply, mod, opt, val)
+    GMOD_DEBUGGER.config[mod][opt] = val
+    timer.Start("gmod-debugger:config")
+end
+
 function GMOD_DEBUGGER:SendOptions(ply)
     if !GMOD_DEBUGGER.options then return end
 
@@ -51,6 +62,12 @@ net.Receive("gmod-debugger:config", function(len, ply)
         GMOD_DEBUGGER:SynchronizeConfig(ply)
         GMOD_DEBUGGER:SendOptions(ply)
         local r = net.ReadBit()
+    else
+        local t = net.ReadString()
+        if t == "Bool" then
+            local mod, opt, val = net.ReadString(), net.ReadString(), net.ReadBool()
+            GMOD_DEBUGGER:SetConfig(ply, mod, opt, val)
+        end
     end
 end)
 
