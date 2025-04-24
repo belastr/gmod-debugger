@@ -43,7 +43,7 @@ local function logs()
     sv:SetText("Server")
     sv:SizeToContentsX()
 
-    for error_msg, data in SortedPairs(GMOD_DEBUGGER.logs.error) do
+    for error_msg, data in SortedPairsByMemberValue(GMOD_DEBUGGER.logs.error, "time", true) do
         local log = vgui.Create("Panel", page)
         log:Dock(TOP)
         log:DockMargin(0, 0, 0, 10)
@@ -57,10 +57,11 @@ local function logs()
         else
             title:SetTextColor(Color(222, 169, 9))
         end
+        local timeStr = os.date("[%m/%d %I:%M%p] ", data.time)
         if data.count > 1 then
-            title:SetText(error_msg .. " x" .. data.count)
+            title:SetText(timeStr .. error_msg .. " x" .. data.count)
         else
-            title:SetText(error_msg)
+            title:SetText(timeStr .. error_msg)
         end
 
         if data.stack then
