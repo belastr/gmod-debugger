@@ -8,6 +8,7 @@ hook.Add("gmod-debugger:page", "gmod-debugger:menu", function(panel, path)
     if #pathTbl >= 3 then
         if pathTbl[3] == "config" then
             panel:Clear()
+            if !GMOD_DEBUGGER.options[pathTbl[2]] then return end
             for o, d in SortedPairs(GMOD_DEBUGGER.options[pathTbl[2]]) do
                 local btnConfig = vgui.Create("DebuggerConfig" .. d, panel)
                 btnConfig:SetText("#" .. pathTbl[2] .. "." .. o)
