@@ -22,7 +22,37 @@ hook.Add("gmod-debugger:page", "gmod-debugger:menu", function(panel, path)
         panel:Clear()
         local title = vgui.Create("DLabel", panel)
         title:Dock(TOP)
+        title:SetFont("DefaultUnderline")
+        title:SetTextColor(Color(0, 130, 255))
         title:SetText(pathTbl[2])
+
+        local config = vgui.Create("DButton", panel)
+        config:SetPos(0, title:GetY() + title:GetTall() + 5)
+        config:SetFont("Default")
+        config:SetText("config")
+        config:SizeToContents()
+        config.DoClick = function() panel:SetPath("Home/" .. pathTbl[2] .. "/config") end
+        config.Paint = function(s)
+            if s:IsHovered() then
+                s:SetTextColor(Color(0, 130, 255))
+            else
+                s:SetTextColor(Color(51, 51, 51))
+            end
+        end
+
+        local logs = vgui.Create("DButton", panel)
+        logs:SetPos(0, config:GetY() + config:GetTall() + 5)
+        logs:SetFont("Default")
+        logs:SetText("logs")
+        logs:SizeToContents()
+        logs.DoClick = function() panel:SetPath("Home/" .. pathTbl[2] .. "/logs") end
+        logs.Paint = function(s)
+            if s:IsHovered() then
+                s:SetTextColor(Color(0, 130, 255))
+            else
+                s:SetTextColor(Color(51, 51, 51))
+            end
+        end
     elseif path == "Home" then
         panel:Clear()
         local title = vgui.Create("DLabel", panel)
