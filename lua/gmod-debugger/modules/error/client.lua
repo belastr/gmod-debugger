@@ -22,16 +22,41 @@ end)
 
 local page
 local function logs()
+    local labels = vgui.Create("Panel", page)
+    labels:Dock(TOP)
+    labels:DockMargin(0, 0, 0, 10)
+    labels:SetTall(20)
+
+    local cl = vgui.Create("DLabel", labels)
+    cl:SetPos(0, 0)
+    cl:SetTall(20)
+    cl:SetFont("Default")
+    cl:SetTextColor(Color(222, 169, 9))
+    cl:SetText("Client")
+    cl:SizeToContentsX()
+
+    local sv = vgui.Create("DLabel", labels)
+    sv:SetPos(cl:GetWide() + 5, 0)
+    sv:SetTall(20)
+    sv:SetFont("Default")
+    sv:SetTextColor(Color(3, 169, 244))
+    sv:SetText("Server")
+    sv:SizeToContentsX()
+
     for error_msg, data in SortedPairs(GMOD_DEBUGGER.logs.error) do
         local log = vgui.Create("Panel", page)
         log:Dock(TOP)
-        log:DockMargin(0, 0, 0, 5)
+        log:DockMargin(0, 0, 0, 10)
         
         local title = vgui.Create("DLabel", log)
         title:Dock(TOP)
         title:SetTall(20)
         title:SetFont("Default")
-        title:SetTextColor(Color(255, 130, 0))
+        if data.server then
+            title:SetTextColor(Color(3, 169, 244))
+        else
+            title:SetTextColor(Color(222, 169, 9))
+        end
         if data.count > 1 then
             title:SetText(error_msg .. " x" .. data.count)
         else
@@ -43,6 +68,7 @@ local function logs()
             for i, p in ipairs(data.stack) do
                 str = str .. string.rep(" ", i + 1) .. i .. ". " .. p.Function .. " - " .. p.File .. ":" .. p.Line .. "\n"
             end
+            str = string.TrimRight(str, "\n")
 
             local stack = vgui.Create("DLabel", log)
             stack:Dock(TOP)

@@ -1,6 +1,6 @@
 hook.Add("OnLuaError", "gmod-debugger:error", function(error_msg, _, error_stack)
     if GMOD_DEBUGGER.config.error.server then
-        local d = {stack = GMOD_DEBUGGER.config.error.stack && error_stack || false, count = 1}
+        local d = {stack = GMOD_DEBUGGER.config.error.stack && error_stack || false, count = 1, server = true}
         GMOD_DEBUGGER:SaveLog("error", {msg = error_msg, data = d})
     end
 end)
