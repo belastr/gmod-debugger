@@ -15,8 +15,8 @@ hook.Add("OnLuaError", "gmod-debugger:error", function(errormsg, _, error_stack)
             log.data.time = os.time()
         end
         table.insert(tmpLogs, 1, log)
-        end
-        timer.Start("gmod-debugger:error")
+    end
+    timer.Start("gmod-debugger:error")
 end)
 
 local page
@@ -73,7 +73,8 @@ hook.Add("gmod-debugger:logs", "gmod-debugger:error", function(mod, panel)
     end
 end)
 
-language.Add("error.client", "log client errors (significantly increases network traffic)")
+language.Add("error.client", "log client errors (if a client is receiving too many errors the log might not be send)")
+language.Add("error.logfiles", "automatically generate a log file for each session")
 language.Add("error.post", "post logs to the discord")
 language.Add("error.server", "log server errors")
-language.Add("error.stack", "include error stacks in the logs")
+language.Add("error.stack", "include error stacks in the logs (increases log size, might be worth turning off when turning on client errors)")
