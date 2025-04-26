@@ -1,23 +1,22 @@
 local tmpLogs = {}
 
 timer.Create("gmod-debugger:error", 5, 0, function()
-    for error_msg, d in pairs(tmpLogs) do
-        GMOD_DEBUGGER:SendLog("error", {msg = error_msg, data = d})
-        tmpLogs[error_msg] = nil
-    end
+    GMOD_DEBUGGER:SendLog("error", tmpLogs)
     timer.Stop("gmod-debugger:error")
 end)
 timer.Stop("gmod-debugger:error")
 
-hook.Add("OnLuaError", "gmod-debugger:error", function(error_msg, _, error_stack)
-    if GMOD_DEBUGGER.config.error.client then
-        if !tmpLogs[error_msg] then
-            tmpLogs[error_msg] = {stack = GMOD_DEBUGGER.config.error.stack && error_stack || false, count = 1}
-        else
-            tmpLogs[error_msg].count = tmpLogs[error_msg].count + 1
+hook.Add("OnLuaError", "gmod-debugger:error", function(errormsg, _, error_stack)
+    if tmpLogs[1] && tmpLogs[1].error_msg == errormsg then
+        tmpLogs[1].data.count = tmpLogs[1].data.count + 1
+    else
+        local log = {error_msg = errormsg, data = {stack = GMOD_DEBUGGER.config.error.stack && error_stack || false, count = 1}}
+        if !log.data.time then
+            log.data.time = os.time()
+        end
+        table.insert(tmpLogs, 1, log)
         end
         timer.Start("gmod-debugger:error")
-    end
 end)
 
 local page
