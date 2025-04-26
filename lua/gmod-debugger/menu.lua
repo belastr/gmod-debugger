@@ -62,6 +62,20 @@ hook.Add("gmod-debugger:page", "gmod-debugger:menu", function(panel, path)
                 s:SetTextColor(Color(51, 51, 51))
             end
         end
+
+        local logfile = vgui.Create("DButton", panel)
+        logfile:SetPos(0, logs:GetY() + logs:GetTall() + 5)
+        logfile:SetFont("Default")
+        logfile:SetText("generate a log file (sv://data/gmod-debugger/logs/" .. pathTbl[2] .. ")" )
+        logfile:SizeToContents()
+        logfile.DoClick = function() end
+        logfile.Paint = function(s)
+            if s:IsHovered() then
+                s:SetTextColor(Color(0, 130, 255))
+            else
+                s:SetTextColor(Color(51, 51, 51))
+            end
+        end
     elseif path == "Home" then
         panel:Clear()
         local title = vgui.Create("DLabel", panel)
