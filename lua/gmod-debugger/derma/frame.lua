@@ -112,8 +112,8 @@ function PANEL:PerformLayout()
     self.btnsPath:SetPos(20 + self.pathHome:GetWide(), 70)
     self.btnsPath:SetSize(self:GetWide() - 40 - self.pathHome:GetWide(), 12)
 
-    self.page:SetPos(20, 122)
-    self.page:SetSize(self:GetWide() - 40, self:GetTall() - 122)
+    self.page:SetPos(20, 102)
+    self.page:SetSize(self:GetWide() - 40, self:GetTall() - 102)
 end
 
 function PANEL:SetPath(path)
