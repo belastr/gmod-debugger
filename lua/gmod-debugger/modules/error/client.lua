@@ -21,14 +21,18 @@ end)
 
 local page
 local function logs()
+    local bufferTop = vgui.Create("Panel", page)
+    bufferTop:Dock(TOP)
+    bufferTop:SetTall(20)
+
     local labels = vgui.Create("Panel", page)
     labels:Dock(TOP)
     labels:DockMargin(0, 0, 0, 10)
-    labels:SetTall(20)
+    labels:SetTall(18)
 
     local cl = vgui.Create("DLabel", labels)
     cl:SetPos(0, 0)
-    cl:SetTall(20)
+    cl:SetTall(18)
     cl:SetFont("Default")
     cl:SetTextColor(Color(222, 169, 9))
     cl:SetText("Client")
@@ -36,54 +40,21 @@ local function logs()
 
     local sv = vgui.Create("DLabel", labels)
     sv:SetPos(cl:GetWide() + 5, 0)
-    sv:SetTall(20)
+    sv:SetTall(18)
     sv:SetFont("Default")
     sv:SetTextColor(Color(3, 169, 244))
     sv:SetText("Server")
     sv:SizeToContentsX()
 
-    for error_msg, data in SortedPairsByMemberValue(GMOD_DEBUGGER.logs.error, "time", true) do
-        local log = vgui.Create("Panel", page)
-        log:Dock(TOP)
-        log:DockMargin(0, 0, 0, 10)
-        
-        local title = vgui.Create("DLabel", log)
-        title:Dock(TOP)
-        title:SetTall(20)
-        title:SetFont("Default")
-        if data.server then
-            title:SetTextColor(Color(3, 169, 244))
-        else
-            title:SetTextColor(Color(222, 169, 9))
-        end
-        local timeStr = os.date("[%m/%d %I:%M%p] ", data.time)
-        if data.count > 1 then
-            title:SetText(timeStr .. error_msg .. " x" .. data.count)
-        else
-            title:SetText(timeStr .. error_msg)
-        end
-
-        if data.stack then
-            local str = ""
-            for i, p in ipairs(data.stack) do
-                str = str .. string.rep(" ", i + 1) .. i .. ". " .. p.Function .. " - " .. p.File .. ":" .. p.Line .. "\n"
-            end
-            str = string.TrimRight(str, "\n")
-
-            local stack = vgui.Create("DLabel", log)
-            stack:Dock(TOP)
-            stack:SetFont("Default")
-            stack:SetTextColor(Color(51, 51, 51))
-            stack:SetWrap(true)
-            stack:SetAutoStretchVertical(true)
-            stack:SetText(str)
-        end
-
-        timer.Simple(0.01, function()
-            log:InvalidateLayout()
-            log:SizeToChildren(false, true)
-        end)
+    for i, l in ipairs(GMOD_DEBUGGER.logs.error) do
+        local log = vgui.Create("DebuggerLog", page)
+        log:SetData(l)
+        log.altLine = i % 2 == 0
     end
+
+    local bufferBottom = vgui.Create("Panel", page)
+    bufferBottom:Dock(TOP)
+    bufferBottom:SetTall(20)
 end
 
 hook.Add("gmod-debugger:log", "gmod-debugger:error", function(mod)
