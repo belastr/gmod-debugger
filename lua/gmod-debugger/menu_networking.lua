@@ -73,9 +73,11 @@ end)
 
 net.Receive("gmod-debugger:log", function()
     local mod, log_len = net.ReadString(), net.ReadUInt(16)
-    local log = util.JSONToTable(util.Decompress(net.ReadData(log_len)), false, true)
+    local logs = util.JSONToTable(util.Decompress(net.ReadData(log_len)), false, true)
 
-    GMOD_DEBUGGER:SaveLog(mod, log)
+    for i, l in ipairs(logs) do
+        GMOD_DEBUGGER:SaveLog(mod, l)
+    end
 end)
 
 net.Receive("gmod-debugger:logs", function(_, ply)

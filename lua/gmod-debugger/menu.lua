@@ -82,7 +82,7 @@ function GMOD_DEBUGGER:SendLog(mod, log)
     log = util.Compress(util.TableToJSON(log))
     local log_len = #log
 
-    net.Start("gmod-debugger:log")
+    net.Start("gmod-debugger:log", true)
     net.WriteString(mod)
     net.WriteUInt(log_len, 16)
     net.WriteData(log, log_len)
