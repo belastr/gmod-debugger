@@ -7,16 +7,18 @@ end)
 timer.Stop("gmod-debugger:error")
 
 hook.Add("OnLuaError", "gmod-debugger:error", function(errormsg, _, error_stack)
-    if tmpLogs[1] && tmpLogs[1].error_msg == errormsg then
-        tmpLogs[1].data.count = tmpLogs[1].data.count + 1
-    else
-        local log = {error_msg = errormsg, data = {stack = GMOD_DEBUGGER.config.error.stack && error_stack || false, count = 1}}
-        if !log.data.time then
-            log.data.time = os.time()
+    if GMOD_DEBUGGER.config.error.client then
+        if tmpLogs[1] && tmpLogs[1].error_msg == errormsg then
+            tmpLogs[1].data.count = tmpLogs[1].data.count + 1
+        else
+            local log = {error_msg = errormsg, data = {stack = GMOD_DEBUGGER.config.error.stack && error_stack || false, count = 1}}
+            if !log.data.time then
+                log.data.time = os.time()
+            end
+            table.insert(tmpLogs, 1, log)
         end
-        table.insert(tmpLogs, 1, log)
+        timer.Start("gmod-debugger:error")
     end
-    timer.Start("gmod-debugger:error")
 end)
 
 local page
