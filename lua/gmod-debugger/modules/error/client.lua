@@ -31,20 +31,57 @@ local function logs()
     labels:SetTall(18)
 
     local cl = vgui.Create("DLabel", labels)
-    cl:SetPos(0, 0)
-    cl:SetTall(18)
+    cl:Dock(LEFT)
+    cl:DockMargin(0, 0, 5, 0)
     cl:SetFont("Default")
     cl:SetTextColor(Color(222, 169, 9))
     cl:SetText("Client")
     cl:SizeToContentsX()
 
     local sv = vgui.Create("DLabel", labels)
-    sv:SetPos(cl:GetWide() + 5, 0)
-    sv:SetTall(18)
+    sv:Dock(LEFT)
     sv:SetFont("Default")
     sv:SetTextColor(Color(3, 169, 244))
     sv:SetText("Server")
     sv:SizeToContentsX()
+
+    local logFile = vgui.Create("DButton", labels)
+    logFile:Dock(RIGHT)
+    logFile:SetFont("Default")
+    logFile:SetText("Generate Log File (/data/gmod-debugger/logs/error)")
+    logFile:SizeToContentsX()
+    logFile.DoClick = function(s)
+        GMOD_DEBUGGER:CreateLogFileFolders("error")
+        local content = os.date("error log file generated on %m/%d at %I:%M%p\n\n", os.time())
+        for _, l in ipairs(GMOD_DEBUGGER.logs.error) do
+            content = content .. os.date("[%m/%d %I:%M%p] ", l.data.time)
+            content = content .. l.error_msg .. " x" .. l.data.count .. "\n"
+            if l.data.stack then
+                for i, r in ipairs(l.data.stack) do
+                    content = content .. string.rep(" ", i + 1) .. i .. ". " .. r.Function .. " - " .. r.File .. ":" .. r.Line .. "\n"
+                end
+            end
+            content = content .. "\n"
+        end
+        local suc = file.Write(os.date("gmod-debugger/logs/error/%Y_%m_%d_%H-%M-%S.txt", os.time()), content)
+        if suc then
+            s:SetText("Log File generated")
+            s:SetTextColor(Color(0, 255, 130))
+        else
+            s:SetText("[ERROR] something went wrong")
+            s:SetTextColor(Color(255, 130, 0))
+        end
+        s:SetMouseInputEnabled(false)
+        s:SizeToContentsX()
+    end
+    logFile.Paint = function(s)
+        if !s:IsMouseInputEnabled() then return end
+        if s:IsHovered() then
+            s:SetTextColor(Color(0, 130, 255))
+        else
+            s:SetTextColor(Color(51, 51, 51))
+        end
+    end
 
     for i, l in ipairs(GMOD_DEBUGGER.logs.error) do
         local log = vgui.Create("DebuggerLog", page)
