@@ -11,7 +11,7 @@ hook.Add("OnLuaError", "gmod-debugger:error", function(errormsg, _, error_stack)
         if tmpLogs[1] && tmpLogs[1].error_msg == errormsg then
             tmpLogs[1].data.count = tmpLogs[1].data.count + 1
         else
-            local log = {error_msg = errormsg, data = {stack = GMOD_DEBUGGER.config.error.stack && error_stack || false, count = 1}}
+            local log = {error_msg = errormsg, data = {stack = GMOD_DEBUGGER.config.error.stack && error_stack || false, client = LocalPlayer():SteamID(), count = 1}}
             if !log.data.time then
                 log.data.time = os.time()
             end
@@ -57,7 +57,10 @@ local function logs()
         local content = os.date("error log file generated on %m/%d at %I:%M%p\n\n", os.time())
         for _, l in ipairs(GMOD_DEBUGGER.logs.error) do
             content = content .. os.date("[%m/%d %I:%M%p] ", l.data.time)
-            content = content .. l.error_msg .. " x" .. l.data.count .. "\n"
+            if l.data.client then
+                content = content .. "[" .. l.data.client .. "] "
+            end
+            content = content .. l.error_msg .. " [x" .. l.data.count .. "]\n"
             if l.data.stack then
                 for i, r in ipairs(l.data.stack) do
                     content = content .. string.rep(" ", i + 1) .. i .. ". " .. r.Function .. " - " .. r.File .. ":" .. r.Line .. "\n"

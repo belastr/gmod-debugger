@@ -58,13 +58,14 @@ function PANEL:PerformLayout(w, h)
 end
 
 function PANEL:SetData(log)
-    if log.data.server then
+    if !log.data.client then
         self.columnTime:SetTextColor(Color(3, 169, 244))
+        self.columnText:SetText(log.error_msg)
     else
         self.columnTime:SetTextColor(Color(222, 169, 9))
+        self.columnText:SetText("[" .. log.data.client .. "] " .. log.error_msg)
     end
     self.columnTime:SetText(os.date("[%m/%d %I:%M%p] ", log.data.time))
-    self.columnText:SetText(log.error_msg)
     self.columnCount:SetText("x" .. log.data.count)
 
     if log.data.stack then
