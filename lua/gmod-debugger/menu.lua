@@ -1,6 +1,6 @@
 net.Receive("gmod-debugger:menu", function()
     local frame = vgui.Create("DebuggerFrame")
-    frame:SetPath("Home/error/config")
+    frame:SetPath("Home/net")
 end)
 
 hook.Add("gmod-debugger:page", "gmod-debugger:menu", function(panel, path)
