@@ -167,6 +167,56 @@ function PANEL:SetPath(path)
                 end
             end
         end
+
+        local i = tonumber(pathTbl[4])
+        if i then
+            local btnUp = vgui.Create("DButton", self.btnsPath)
+            btnUp:Dock(RIGHT)
+            btnUp:SetFont("Default")
+            btnUp:SetText(">")
+            btnUp:SizeToContentsX()
+            if i < 255 then
+                btnUp.DoClick = function() self:SetPath(pathTbl[1] .. "/" .. pathTbl[2] .. "/" .. pathTbl[3] .. "/" .. tostring(i + 1)) end
+                btnUp.Paint = function(b)
+                    if b:IsHovered() then
+                        b:SetTextColor(Color(0, 130, 255))
+                    else
+                        b:SetTextColor(Color(255, 255, 255, 153))
+                    end
+                end
+            else
+                btnUp:SetMouseInputEnabled(false)
+                btnUp:SetTextColor(Color(255, 255, 255, 75))
+                btnUp.Paint = function() end
+            end
+
+            local num = vgui.Create("DLabel", self.btnsPath)
+            num:Dock(RIGHT)
+            num:SetFont("Default")
+            num:SetTextColor(color_white)
+            num:SetText(" " .. i .. " ")
+            num:SizeToContentsX()
+
+            local btnDown = vgui.Create("DButton", self.btnsPath)
+            btnDown:Dock(RIGHT)
+            btnDown:SetFont("Default")
+            btnDown:SetText("<")
+            btnDown:SizeToContentsX()
+            if i > 1 then
+                btnDown.DoClick = function() self:SetPath(pathTbl[1] .. "/" .. pathTbl[2] .. "/" .. pathTbl[3] .. "/" .. tostring(i - 1)) end
+                btnDown.Paint = function(b)
+                    if b:IsHovered() then
+                        b:SetTextColor(Color(0, 130, 255))
+                    else
+                        b:SetTextColor(Color(255, 255, 255, 153))
+                    end
+                end
+            else
+                btnDown:SetMouseInputEnabled(false)
+                btnDown:SetTextColor(Color(255, 255, 255, 75))
+                btnDown.Paint = function() end
+            end
+        end
     end
     hook.Run("gmod-debugger:page", self.page, path)
 end
