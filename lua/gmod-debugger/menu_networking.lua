@@ -81,8 +81,13 @@ net.Receive("gmod-debugger:log", function()
 end)
 
 net.Receive("gmod-debugger:logs", function(_, ply)
-    local mod = net.ReadString()
-    local logs = util.Compress(util.TableToJSON(GMOD_DEBUGGER.logs[mod]))
+    local mod, p = net.ReadString(), net.ReadUInt(12)
+    local logs = {}
+    for i = p * 50 - 49, p * 50 do
+        if !GMOD_DEBUGGER.logs[mod][i] then break end
+        logs[i - (p - 1) * 50] = GMOD_DEBUGGER.logs[mod][i]
+    end
+    logs = util.Compress(util.TableToJSON(logs))
     local logs_len = #logs
 
     net.Start("gmod-debugger:log")

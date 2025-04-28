@@ -24,7 +24,8 @@ hook.Add("gmod-debugger:page", "gmod-debugger:menu", function(panel, path)
             bufferBottom:SetTall(20)
         elseif pathTbl[3] == "logs" then
             panel:Clear()
-            hook.Run("gmod-debugger:logs", pathTbl[2], panel)
+            if !pathTbl[4] then pathTbl[4] = "1" end
+            hook.Run("gmod-debugger:logs", pathTbl[2], pathTbl[4], panel)
         end
     elseif #pathTbl == 2 then
         panel:Clear()
@@ -54,7 +55,7 @@ hook.Add("gmod-debugger:page", "gmod-debugger:menu", function(panel, path)
         logs:SetFont("Default")
         logs:SetText("logs")
         logs:SizeToContents()
-        logs.DoClick = function() panel:SetPath("Home/" .. pathTbl[2] .. "/logs") end
+        logs.DoClick = function() panel:SetPath("Home/" .. pathTbl[2] .. "/logs/1") end
         logs.Paint = function(s)
             if s:IsHovered() then
                 s:SetTextColor(Color(0, 130, 255))

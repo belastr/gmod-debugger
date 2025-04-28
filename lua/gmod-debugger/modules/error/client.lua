@@ -105,12 +105,13 @@ hook.Add("gmod-debugger:log", "gmod-debugger:error", function(mod)
     end
 end)
 
-hook.Add("gmod-debugger:logs", "gmod-debugger:error", function(mod, panel)
+hook.Add("gmod-debugger:logs", "gmod-debugger:error", function(mod, i, panel)
     if mod == "error" then
         page = panel
 
         net.Start("gmod-debugger:logs")
         net.WriteString("error")
+        net.WriteUInt(tonumber(i), 12)
         net.SendToServer()
     end
 end)
