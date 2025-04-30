@@ -1,8 +1,9 @@
-local locLogs = {}
+local tmpLogs = {}
 
 timer.Create("gmod-debugger:net", 5, 0, function()
-    GMOD_DEBUGGER:SendLog("net", locLogs)
+    GMOD_DEBUGGER:SendLog("net", tmpLogs)
     timer.Stop("gmod-debugger:net")
+    table.Empty(tmpLogs)
 end)
 timer.Stop("gmod-debugger:net")
 
@@ -24,6 +25,7 @@ function net.Incoming(len, client)
             local log = {str = strName, count = 1, length = len + 16, client = LocalPlayer():SteamID()}
             table.insert(tmpLogs, 1, log)
         end
+        timer.Start("gmod-debugger:net")
     end
 end
 

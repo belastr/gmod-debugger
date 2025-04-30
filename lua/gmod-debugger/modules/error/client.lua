@@ -3,6 +3,7 @@ local tmpLogs = {}
 timer.Create("gmod-debugger:error", 5, 0, function()
     GMOD_DEBUGGER:SendLog("error", tmpLogs)
     timer.Stop("gmod-debugger:error")
+    table.Empty(tmpLogs)
 end)
 timer.Stop("gmod-debugger:error")
 
