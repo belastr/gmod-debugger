@@ -50,7 +50,7 @@ local function logs()
     local logFile = vgui.Create("DButton", labels)
     logFile:Dock(RIGHT)
     logFile:SetFont("Default")
-    logFile:SetText("Generate Log File (/data/gmod-debugger/logs/error)")
+    logFile:SetText("Print to Log File (/data/gmod-debugger/logs/error)")
     logFile:SizeToContentsX()
     logFile.DoClick = function(s)
         GMOD_DEBUGGER:CreateLogFileFolders("error")
@@ -68,7 +68,7 @@ local function logs()
             end
             content = content .. "\n"
         end
-        local suc = file.Write(os.date("gmod-debugger/logs/error/%Y_%m_%d_%H-%M-%S.txt", os.time()), content)
+        local suc = file.Write(os.date("gmod-debugger/logs/error/%Y-%m-%d_%H-%M-%S.txt", os.time()), content)
         if suc then
             s:SetText("Log File generated")
             s:SetTextColor(Color(0, 255, 130))
