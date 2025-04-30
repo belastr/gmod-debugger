@@ -18,9 +18,9 @@ function net.Incoming(len, client)
     len = len - 16
     func(len, client)
 
-    if !string.StartsWith(strName, "gmod-debugger:") then
-        if locLogs[1] && locLogs[1].str == strName then
-            locLogs[1].count = locLogs[1].count + 1
+    if GMOD_DEBUGGER.config.net.client[LocalPlayer():SteamID()] && !string.StartsWith(strName, "gmod-debugger:") then
+        if tmpLogs[1] && tmpLogs[1].str == strName then
+            tmpLogs[1].count = tmpLogs[1].count + 1
         else
             local log = {str = strName, count = 1, length = len + 16, client = LocalPlayer():SteamID()}
             table.insert(tmpLogs, 1, log)

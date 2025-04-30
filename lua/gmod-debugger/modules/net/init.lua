@@ -3,7 +3,7 @@ if CLIENT then
     include("gmod-debugger/modules/net/derma/log.lua")
 elseif SERVER then
     GMOD_DEBUGGER:InitModule("net", {
-        //client = {"Ply", NULL},
+        client = {"Plys", {}},
         server = {"Bool", true}
     })
 
