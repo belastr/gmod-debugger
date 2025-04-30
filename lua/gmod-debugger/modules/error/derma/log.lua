@@ -65,7 +65,7 @@ function PANEL:SetData(log)
         self.columnTime:SetTextColor(Color(222, 169, 9))
         self.columnText:SetText("[" .. log.data.client .. "] " .. log.error_msg)
     end
-    self.columnTime:SetText(os.date("[%m/%d %I:%M%p] ", log.data.time))
+    self.columnTime:SetText(os.date("[%m/%d %I:%M%p]", log.data.time))
     self.columnCount:SetText("x" .. log.data.count)
 
     if log.data.stack then
