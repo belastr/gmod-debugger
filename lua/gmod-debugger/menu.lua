@@ -23,8 +23,8 @@ hook.Add("gmod-debugger:page", "gmod-debugger:menu", function(panel, path)
             bufferBottom:Dock(TOP)
             bufferBottom:SetTall(20)
         elseif pathTbl[3] == "logs" then
+            if !tonumber(pathTbl[4]) then panel:SetPath(pathTbl[1] .. "/" .. pathTbl[2] .. "/" .. pathTbl[3] .. "/1") return end
             panel:Clear()
-            if !pathTbl[4] then pathTbl[4] = "1" end
             hook.Run("gmod-debugger:logs", pathTbl[2], pathTbl[4], panel)
         end
     elseif #pathTbl == 2 then
