@@ -21,8 +21,8 @@ function net.Incoming(len, client)
         if locLogs[1] && locLogs[1].str == strName then
             locLogs[1].count = locLogs[1].count + 1
         else
-            local log = {str = strName, count = 1}
-            table.insert(locLogs, 1, log)
+            local log = {str = strName, count = 1, length = len + 16, client = LocalPlayer():SteamID()}
+            table.insert(tmpLogs, 1, log)
         end
     end
 end
