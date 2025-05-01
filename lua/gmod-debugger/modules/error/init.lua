@@ -8,7 +8,7 @@ elseif SERVER then
         logfiles = {"Bool", false},
         server = {"Bool", true},
         stack = {"Bool", true},
-        post = {"Bool", true}
+        post = {"Bool", false}
     })
 
     AddCSLuaFile("gmod-debugger/modules/error/client.lua")
