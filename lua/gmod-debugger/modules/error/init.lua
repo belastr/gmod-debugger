@@ -5,6 +5,7 @@ elseif SERVER then
     GMOD_DEBUGGER:InitModule("error", {
         client = {"Bool", false},
         clients = {"Plys", {}},
+        logfiles = {"Bool", false},
         server = {"Bool", true},
         stack = {"Bool", true},
         post = {"Bool", true}

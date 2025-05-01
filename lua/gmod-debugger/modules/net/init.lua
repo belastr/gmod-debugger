@@ -4,6 +4,7 @@ if CLIENT then
 elseif SERVER then
     GMOD_DEBUGGER:InitModule("net", {
         client = {"Plys", {}},
+        logfiles = {"Bool", false},
         server = {"Bool", true}
     })
 

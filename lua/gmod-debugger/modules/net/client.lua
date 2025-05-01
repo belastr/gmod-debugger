@@ -124,4 +124,5 @@ hook.Add("gmod-debugger:logs", "gmod-debugger:net", function(mod, i, panel)
 end)
 
 language.Add("net.client", "log net messages received by the selected clients (can potentially cause a lot of traffic)")
+language.Add("net.logfiles", "automatically generate a log file for each session")
 language.Add("net.server", "log net messages received on the serverside")
