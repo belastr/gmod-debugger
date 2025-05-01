@@ -4,7 +4,7 @@ if CLIENT then
 elseif SERVER then
     GMOD_DEBUGGER:InitModule("error", {
         client = {"Bool", false},
-        //clients = {"PlyTbl", {}},
+        clients = {"Plys", {}},
         server = {"Bool", true},
         stack = {"Bool", true},
         post = {"Bool", true}

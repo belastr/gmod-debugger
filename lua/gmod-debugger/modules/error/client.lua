@@ -8,7 +8,7 @@ end)
 timer.Stop("gmod-debugger:error")
 
 hook.Add("OnLuaError", "gmod-debugger:error", function(errormsg, _, error_stack)
-    if GMOD_DEBUGGER.config.error.client then
+    if GMOD_DEBUGGER.config.error.client && (table.IsEmpty(GMOD_DEBUGGER.config.error.clients) || GMOD_DEBUGGER.config.error.clients[LocalPlayer():SteamID()]) then
         if tmpLogs[1] && tmpLogs[1].error_msg == errormsg then
             tmpLogs[1].data.count = tmpLogs[1].data.count + 1
         else
@@ -118,6 +118,7 @@ hook.Add("gmod-debugger:logs", "gmod-debugger:error", function(mod, i, panel)
 end)
 
 language.Add("error.client", "log client errors (if a client is receiving too many errors the log might not be send)")
+language.Add("error.clients", "log client errors of selected players (leave empty to log all players)")
 language.Add("error.logfiles", "automatically generate a log file for each session")
 language.Add("error.post", "post logs to the discord")
 language.Add("error.server", "log server errors")
