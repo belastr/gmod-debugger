@@ -16,12 +16,7 @@ function PANEL:Init()
     self.btnBrowse = vgui.Create("DButton", self)
     self.btnBrowse:SetText("")
     self.btnBrowse.DoClick = function()
-        Derma_StringRequest(
-            "browser",
-            "input path",
-            "Home",
-            function(text) self:SetPath(text) end
-        )
+        self.browser:ToggleVisible()
     end
     self.btnBrowse.Paint = function()
         draw.RoundedBox(4, 8, 8, 32, 32, Color(0, 130, 255))
@@ -48,6 +43,8 @@ function PANEL:Init()
 
     self.btnsPath = vgui.Create("Panel", self)
     self.page = vgui.Create("DebuggerPage", self)
+    self.browser = vgui.Create("DebuggerBrowser", self)
+    self.browser:SetVisible(false)
 
     self:SetSize(ScrW() / 2, ScrH() / 1.5)
     self:Center()
@@ -114,6 +111,9 @@ function PANEL:PerformLayout()
 
     self.page:SetPos(20, 102)
     self.page:SetSize(self:GetWide() - 40, self:GetTall() - 102)
+
+    self.browser:SetPos(0, 48)
+    self.browser:SetSize(self:GetWide(), self:GetTall() - 48)
 end
 
 function PANEL:SetPath(path)
