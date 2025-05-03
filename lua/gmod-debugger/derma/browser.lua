@@ -101,6 +101,12 @@ function PANEL:Init()
     
     self.btn = vgui.CreateFromTable(button, self.btns)
     self.btn:SetText("Enabled Modules")
+    self.btn.DoClick = function()
+        net.Start("gmod-debugger:core")
+        net.WriteUInt(0, 3)
+        net.SendToServer()
+        self:Hide()
+    end
     
     self.btn = vgui.CreateFromTable(button, self.btns)
     self.btn:SetText("Permissions")
