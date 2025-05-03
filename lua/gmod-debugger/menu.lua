@@ -1,3 +1,6 @@
+local modules = modules or {}
+local frame
+
 net.Receive("gmod-debugger:menu", function()
     frame = vgui.Create("DebuggerFrame")
 end)
@@ -28,39 +31,56 @@ hook.Add("gmod-debugger:page", "gmod-debugger:menu", function(panel, path)
         end
     elseif #pathTbl == 2 then
         panel:Clear()
-        local title = vgui.Create("DLabel", panel)
-        title:Dock(TOP)
-        title:DockMargin(0, 20, 0, 0)
-        title:SetFont("DefaultUnderline")
-        title:SetTextColor(Color(0, 130, 255))
-        title:SetText(pathTbl[2])
 
-        local config = vgui.Create("DButton", panel)
-        config:SetPos(0, title:GetY() + title:GetTall() + 25)
-        config:SetFont("Default")
-        config:SetText("config")
-        config:SizeToContents()
-        config.DoClick = function() panel:SetPath("Home/" .. pathTbl[2] .. "/config") end
-        config.Paint = function(s)
-            if s:IsHovered() then
-                s:SetTextColor(Color(0, 130, 255))
-            else
-                s:SetTextColor(Color(51, 51, 51))
+        if pathTbl[2] == "enabledModules" then
+            local bufferTop = vgui.Create("Panel", panel)
+            bufferTop:Dock(TOP)
+            bufferTop:SetTall(20)
+            for _, mod in SortedPairs(modules) do
+                local btnConfig = vgui.Create("DebuggerConfigBool", panel)
+                btnConfig:SetText(mod)
+                btnConfig:SetValue(GMOD_DEBUGGER.config.enabledModules[mod])
+                btnConfig:SetModule("enabledModules")
+                btnConfig:SetOption(mod)
             end
-        end
-
-        local logs = vgui.Create("DButton", panel)
-        logs:SetPos(0, config:GetY() + config:GetTall() + 5)
-        logs:SetFont("Default")
-        logs:SetText("logs")
-        logs:SizeToContents()
-        logs.DoClick = function() panel:SetPath("Home/" .. pathTbl[2] .. "/logs/1") end
-        logs.Paint = function(s)
-            if s:IsHovered() then
-                s:SetTextColor(Color(0, 130, 255))
-            else
-                s:SetTextColor(Color(51, 51, 51))
+            local bufferBottom = vgui.Create("Panel", panel)
+            bufferBottom:Dock(TOP)
+            bufferBottom:SetTall(20)
+        else
+            local title = vgui.Create("DLabel", panel)
+            title:Dock(TOP)
+            title:DockMargin(0, 20, 0, 0)
+            title:SetFont("DefaultUnderline")
+            title:SetTextColor(Color(0, 130, 255))
+            title:SetText(pathTbl[2])
+    
+            local config = vgui.Create("DButton", panel)
+            config:SetPos(0, title:GetY() + title:GetTall() + 25)
+            config:SetFont("Default")
+            config:SetText("config")
+            config:SizeToContents()
+            config.DoClick = function() panel:SetPath("Home/" .. pathTbl[2] .. "/config") end
+            config.Paint = function(s)
+                if s:IsHovered() then
+                    s:SetTextColor(Color(0, 130, 255))
+                else
+                    s:SetTextColor(Color(51, 51, 51))
+                end
             end
+    
+            local logs = vgui.Create("DButton", panel)
+            logs:SetPos(0, config:GetY() + config:GetTall() + 5)
+            logs:SetFont("Default")
+            logs:SetText("logs")
+            logs:SizeToContents()
+            logs.DoClick = function() panel:SetPath("Home/" .. pathTbl[2] .. "/logs/1") end
+            logs.Paint = function(s)
+                if s:IsHovered() then
+                    s:SetTextColor(Color(0, 130, 255))
+                else
+                    s:SetTextColor(Color(51, 51, 51))
+                end
+            end  
         end
     elseif path == "Home" then
         panel:Clear()
@@ -108,6 +128,14 @@ net.Receive("gmod-debugger:config", function(len)
     for mod, b in pairs(GMOD_DEBUGGER.config.enabledModules) do
         if !b then continue end
         include("gmod-debugger/modules/" .. mod .. "/init.lua")
+    end
+end)
+
+net.Receive("gmod-debugger:core", function(len)
+    local s = net.ReadUInt(3)
+    if s == 0 then
+        modules = net.ReadTable()
+        frame:SetPath("Home/enabledModules")
     end
 end)
 

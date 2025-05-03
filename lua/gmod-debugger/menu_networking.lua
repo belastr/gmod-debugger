@@ -1,5 +1,6 @@
 util.AddNetworkString("gmod-debugger:menu")
 util.AddNetworkString("gmod-debugger:config")
+util.AddNetworkString("gmod-debugger:core")
 util.AddNetworkString("gmod-debugger:options")
 util.AddNetworkString("gmod-debugger:log")
 util.AddNetworkString("gmod-debugger:logs")
@@ -75,6 +76,17 @@ net.Receive("gmod-debugger:config", function(len, ply)
             local mod, opt, val = net.ReadString(), net.ReadString(), net.ReadTable()
             GMOD_DEBUGGER:SetConfig(ply, mod, opt, val)
         end
+    end
+end)
+
+net.Receive("gmod-debugger:core", function(len, ply)
+    local s = net.ReadUInt(3)
+    if s == 0 then
+        local _, m = file.Find("gmod-debugger/modules/*", "LUA")
+        net.Start("gmod-debugger:core")
+        net.WriteUInt(0, 3)
+        net.WriteTable(m)
+        net.Send(ply)
     end
 end)
 
