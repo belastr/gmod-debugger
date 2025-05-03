@@ -16,6 +16,10 @@ end
 
 timer.Create("gmod-debugger:config", 5, 0, function()
     GMOD_DEBUGGER:SynchronizeConfig()
+
+    if !file.Exists("gmod-debugger", "DATA") then file.CreateDir("gmod-debugger") end
+    file.Write("gmod-debugger/config.json", util.TableToJSON(GMOD_DEBUGGER.config, true))
+
     timer.Stop("gmod-debugger:config")
 end)
 timer.Stop("gmod-debugger:config")
