@@ -50,6 +50,8 @@ function PANEL:Init()
     self:Center()
     self:SetTitle("gmod-debugger")
     self:MakePopup()
+
+    self:SetPath("Home")
 end
 
 function PANEL:Think()
