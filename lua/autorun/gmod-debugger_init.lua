@@ -27,7 +27,7 @@ elseif SERVER && GMOD_DEBUGGER then
     MsgD("loading debugger config")
     local config = file.Read("gmod-debugger/config.json")
     if !config then
-        config = util.TableToJSON({enabledModules = {"error", "net"}}, true)
+        config = util.TableToJSON({enabledModules = {error = true, net = true}}, true)
         if !file.Exists("gmod-debugger", "DATA") then file.CreateDir("gmod-debugger") end
         file.Write("gmod-debugger/config.json", config)
         MsgW("config file at garrysmod/data/gmod-debugger/config.json was not found, creating default") 
@@ -39,7 +39,8 @@ elseif SERVER && GMOD_DEBUGGER then
     GMOD_DEBUGGER.config = util.JSONToTable(config, false, true)
 
     MsgD("loading debugger modules")
-    for _, mod in ipairs(GMOD_DEBUGGER.config.enabledModules) do
+    for mod, b in pairs(GMOD_DEBUGGER.config.enabledModules) do
+        if !b then continue end
         MsgD("attempting to load module: " .. mod)
         AddCSLuaFile("gmod-debugger/modules/" .. mod .. "/init.lua")
         include("gmod-debugger/modules/" .. mod .. "/init.lua")
