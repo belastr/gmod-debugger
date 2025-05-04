@@ -102,13 +102,52 @@ hook.Add("gmod-debugger:page", "gmod-debugger:menu", function(panel, path)
                 else
                     s:SetTextColor(Color(51, 51, 51))
                 end
-            end  
+            end
         end
     elseif path == "Home" then
         panel:Clear()
+
         local title = vgui.Create("DLabel", panel)
         title:Dock(TOP)
+        title:DockMargin(0, 20, 0, 0)
+        title:SetFont("DefaultUnderline")
+        title:SetTextColor(Color(0, 130, 255))
         title:SetText("gmod-debugger")
+
+        local desc = vgui.Create("DLabel", panel)
+        desc:SetPos(0, title:GetY() + title:GetTall() + 25)
+        desc:SetFont("Default")
+        desc:SetTextColor(Color(51, 51, 51))
+        desc:SetText("A debugger tool with mainly in-game menus and lots of configuration. There are seperated modules that all aim to collect valuable information to then be accessible immediately in-game with options to also extract the information.")
+        desc:SizeToContents()
+
+        local instruc = vgui.Create("DLabel", panel)
+        instruc:SetPos(0, desc:GetY() + desc:GetTall() + 5)
+        instruc:SetFont("Default")
+        instruc:SetTextColor(Color(51, 51, 51))
+        instruc:SetText("Click the browser button at the top left to navigate through the menu.")
+        instruc:SizeToContents()
+
+        local extra = vgui.Create("DLabel", panel)
+        extra:SetPos(0, instruc:GetY() + instruc:GetTall() + 25)
+        extra:SetFont("Default")
+        extra:SetTextColor(Color(51, 51, 51))
+        extra:SetText("Visit the GitHub repository for information about it, giving feedback or contributing to it.")
+        extra:SizeToContents()
+
+        local link = vgui.Create("DButton", panel)
+        link:SetPos(0, extra:GetY() + extra:GetTall() + 5)
+        link:SetFont("Default")
+        link:SetText("GitHub Link")
+        link:SizeToContents()
+        link.DoClick = function() gui.OpenURL("https://github.com/belastr/gmod-debugger") end
+        link.Paint = function(s)
+            if s:IsHovered() then
+                s:SetTextColor(Color(0, 130, 255))
+            else
+                s:SetTextColor(Color(51, 51, 51))
+            end
+        end
     end
 end)
 
