@@ -26,6 +26,8 @@ end)
 timer.Stop("gmod-debugger:config")
 
 function GMOD_DEBUGGER:SetConfig(ply, mod, opt, val)
+    if !GMOD_DEBUGGER:HasAccess(ply) then return end
+
     GMOD_DEBUGGER.config[mod][opt] = val
     timer.Start("gmod-debugger:config")
 end
@@ -80,6 +82,8 @@ net.Receive("gmod-debugger:config", function(len, ply)
 end)
 
 net.Receive("gmod-debugger:core", function(len, ply)
+    if !GMOD_DEBUGGER:HasAccess(ply) then return end
+
     local s = net.ReadUInt(3)
     if s == 0 then
         local _, m = file.Find("gmod-debugger/modules/*", "LUA")
@@ -100,6 +104,8 @@ net.Receive("gmod-debugger:log", function()
 end)
 
 net.Receive("gmod-debugger:logs", function(_, ply)
+    if !GMOD_DEBUGGER:HasAccess(ply) then return end
+
     local mod, p = net.ReadString(), net.ReadUInt(12)
     local logs = {}
     for i = p * 50 - 49, p * 50 do

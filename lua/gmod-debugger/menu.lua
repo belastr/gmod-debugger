@@ -6,6 +6,8 @@ net.Receive("gmod-debugger:menu", function()
 end)
 
 hook.Add("gmod-debugger:page", "gmod-debugger:menu", function(panel, path)
+    if !GMOD_DEBUGGER:HasAccess(LocalPlayer()) then return end
+
     local pathTbl = string.Explode("/", path)
     if #pathTbl >= 3 then
         if pathTbl[3] == "config" then
