@@ -27,7 +27,7 @@ elseif SERVER && GMOD_DEBUGGER then
     MsgD("loading debugger config")
     local config = file.Read("gmod-debugger/config.json")
     if !config then
-        config = util.TableToJSON({enabledModules = {error = true, net = true}, accessGroups = {superadmin = true}, accessUsers = {}}, true)
+        config = util.TableToJSON({enabledModules = {error = true, net = true}, permissions = {accessGroups = {superadmin = true}, accessUsers = {}}}, true)
         if !file.Exists("gmod-debugger", "DATA") then file.CreateDir("gmod-debugger") end
         file.Write("gmod-debugger/config.json", config)
         MsgW("config file at garrysmod/data/gmod-debugger/config.json was not found, creating default") 
