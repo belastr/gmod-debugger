@@ -174,3 +174,6 @@ net.Receive("gmod-debugger:log", function(len)
 
     hook.Run("gmod-debugger:log", mod)
 end)
+
+language.Add("core.accessGroups", "UserGroups that can access the gmod-debugger (Add UserGroup can only find groups that are currently online, so you might need to enter them manually)")
+language.Add("core.accessUsers", "clients that can access the gmod-debugger")
