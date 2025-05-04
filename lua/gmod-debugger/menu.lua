@@ -125,7 +125,7 @@ net.Receive("gmod-debugger:config", function(len)
     local configData = net.ReadData(len / 8)
     GMOD_DEBUGGER.config = util.JSONToTable(util.Decompress(configData), false, true)
     
-    if GMOD_DEBUGGER.options then return end
+    if !table.IsEmpty(GMOD_DEBUGGER.options) then return end
     for mod, b in pairs(GMOD_DEBUGGER.config.enabledModules) do
         if !b then continue end
         include("gmod-debugger/modules/" .. mod .. "/init.lua")
