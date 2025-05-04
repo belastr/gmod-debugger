@@ -110,6 +110,10 @@ function PANEL:Init()
     
     self.btn = vgui.CreateFromTable(button, self.btns)
     self.btn:SetText("Permissions")
+    self.btn.DoClick = function()
+        self:GetParent():SetPath("Home/permissions")
+        self:Hide()
+    end
 
     self.spacer2 = vgui.CreateFromTable(spacer, self.btns)
     self.spacer2:SetText("MODULES")

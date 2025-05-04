@@ -48,6 +48,26 @@ hook.Add("gmod-debugger:page", "gmod-debugger:menu", function(panel, path)
             local bufferBottom = vgui.Create("Panel", panel)
             bufferBottom:Dock(TOP)
             bufferBottom:SetTall(20)
+        elseif pathTbl[2] == "permissions" then
+            local bufferTop = vgui.Create("Panel", panel)
+            bufferTop:Dock(TOP)
+            bufferTop:SetTall(20)
+
+            local btnGroups = vgui.Create("DebuggerConfigUserGroups", panel)
+            btnGroups:SetText("#core.accessGroups")
+            btnGroups:SetValue(GMOD_DEBUGGER.config.permissions.accessGroups)
+            btnGroups:SetModule("permissions")
+            btnGroups:SetOption("accessGroups")
+
+            local btnUsers = vgui.Create("DebuggerConfigPlys", panel)
+            btnUsers:SetText("#core.accessUsers")
+            btnUsers:SetValue(GMOD_DEBUGGER.config.permissions.accessUsers)
+            btnUsers:SetModule("permissions")
+            btnUsers:SetOption("accessUsers")
+
+            local bufferBottom = vgui.Create("Panel", panel)
+            bufferBottom:Dock(TOP)
+            bufferBottom:SetTall(20)
         else
             local title = vgui.Create("DLabel", panel)
             title:Dock(TOP)
