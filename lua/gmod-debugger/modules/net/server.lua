@@ -36,7 +36,7 @@ hook.Add("gmod-debugger:saveLog", "gmod-debugger:net", function(mod, log)
             else
                 content = content .. "[sv] [" .. log.ply .. "] "
             end
-            content = content .. log.str .. "\n"
+            content = content .. log.str .. " [x" .. log.count .. "]\n"
 
             file.Append("gmod-debugger/logs/net/" .. GMOD_DEBUGGER.sessionKey .. ".txt", content)
         end
