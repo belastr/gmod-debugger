@@ -14,8 +14,11 @@ elseif SERVER && GMOD_DEBUGGER then
         MsgC(col, "# ", Color(242, 101, 88), "WARNING: ", msg, "\n")
     end
 
+    local key = os.date("s_%Y-%m-%d_%H-%M-%S", os.time())
+
     MsgC(col, "### gmod-debugger ###>\n")
     MsgD("initialising")
+    MsgD("session key: " .. key)
     MsgD("")
 
     MsgD("loading debugger core")
@@ -37,6 +40,7 @@ elseif SERVER && GMOD_DEBUGGER then
     MsgD("")
 
     GMOD_DEBUGGER.config = util.JSONToTable(config, false, true)
+    GMOD_DEBUGGER.sessionKey = key
 
     MsgD("loading debugger modules")
     for mod, b in pairs(GMOD_DEBUGGER.config.enabledModules) do
