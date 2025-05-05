@@ -72,7 +72,7 @@ local function logs()
             end
             content = content .. l.str .. " [x" .. l.count .. "]\n\n"
         end
-        local suc = file.Write(os.date("gmod-debugger/logs/net/%Y-%m-%d_%H-%M-%S.txt", os.time()), content)
+        local suc = file.Write(os.date("gmod-debugger/logs/net/l_%Y-%m-%d_%H-%M-%S.txt", os.time()), content)
         if suc then
             s:SetText("Log File generated")
             s:SetTextColor(Color(0, 255, 130))
