@@ -62,6 +62,15 @@ function GMOD_DEBUGGER:InitModule(mod, cfg)
     end
 end
 
+function GMOD_DEBUGGER:CreateLogFileFolders(mod)
+    if !file.Exists("gmod-debugger/logs", "DATA") then
+        file.CreateDir("gmod-debugger/logs")
+    end
+    if !file.Exists("gmod-debugger/logs/" .. mod, "DATA") then
+        file.CreateDir("gmod-debugger/logs/" .. mod)
+    end
+end
+
 net.Receive("gmod-debugger:config", function(len, ply)
     if len < 1 then
         GMOD_DEBUGGER:SynchronizeConfig(ply)
