@@ -25,7 +25,7 @@ hook.Add("gmod-debugger:saveLog", "gmod-debugger:error", function(mod, log)
             if log.data.client then
                 content = content .. "[" .. log.data.client .. "] "
             end
-            content = content .. log.error_msg .. " [x" .. l.count .. "]\n"
+            content = content .. log.error_msg .. " [x" .. log.count .. "]\n"
             if log.data.stack then
                 for i, r in ipairs(log.data.stack) do
                     content = content .. string.rep(" ", i + 1) .. i .. ". " .. r.Function .. " - " .. r.File .. ":" .. r.Line .. "\n"
