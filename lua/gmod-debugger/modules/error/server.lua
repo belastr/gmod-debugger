@@ -15,5 +15,25 @@ hook.Add("gmod-debugger:saveLog", "gmod-debugger:error", function(mod, log)
             end
             table.insert(GMOD_DEBUGGER.logs.error, 1, log)
         end
+        if GMOD_DEBUGGER.config.error.logfiles then
+            GMOD_DEBUGGER:CreateLogFileFolders("error")
+            if !file.Exists("gmod-debugger/logs/error/" .. GMOD_DEBUGGER.sessionKey .. ".txt", "DATA") then
+                file.Write("gmod-debugger/logs/error/" .. GMOD_DEBUGGER.sessionKey .. ".txt", "error log file automatically generated for session " .. GMOD_DEBUGGER.sessionKey .. "\n\n")
+            end
+
+            local content = os.date("[%m/%d %H:%M:%S] ", log.data.time)
+            if log.data.client then
+                content = content .. "[" .. log.data.client .. "] "
+            end
+            content = content .. log.error_msg .. "\n"
+            if log.data.stack then
+                for i, r in ipairs(log.data.stack) do
+                    content = content .. string.rep(" ", i + 1) .. i .. ". " .. r.Function .. " - " .. r.File .. ":" .. r.Line .. "\n"
+                end
+            end
+            content = content .. "\n"
+
+            file.Append("gmod-debugger/logs/error/" .. GMOD_DEBUGGER.sessionKey .. ".txt", content)
+        end
     end
 end)

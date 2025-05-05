@@ -24,5 +24,21 @@ hook.Add("gmod-debugger:saveLog", "gmod-debugger:net", function(mod, log)
             end
             table.insert(GMOD_DEBUGGER.logs.net, 1, log)
         end
+        if GMOD_DEBUGGER.config.net.logfiles then
+            GMOD_DEBUGGER:CreateLogFileFolders("net")
+            if !file.Exists("gmod-debugger/logs/net/" .. GMOD_DEBUGGER.sessionKey .. ".txt", "DATA") then
+                file.Write("gmod-debugger/logs/net/" .. GMOD_DEBUGGER.sessionKey .. ".txt", "net log file automatically generated for session " .. GMOD_DEBUGGER.sessionKey .. "\n\n")
+            end
+
+            local content = os.date("[%m/%d %H:%M:%S] ", log.time)
+            if log.client then
+                content = content .. "[cl] [" .. log.client .. "] "
+            else
+                content = content .. "[sv] [" .. log.ply .. "] "
+            end
+            content = content .. log.str .. "\n"
+
+            file.Append("gmod-debugger/logs/net/" .. GMOD_DEBUGGER.sessionKey .. ".txt", content)
+        end
     end
 end)
