@@ -29,6 +29,8 @@ if CLIENT then
     include("gmod-debugger/access.lua")
     include("gmod-debugger/menu.lua")
 elseif SERVER then
+    resource.AddWorkshop("3477086034")
+
     for _, f in ipairs(file.Find("gmod-debugger/derma/*.lua", "LUA")) do
         AddCSLuaFile("gmod-debugger/derma/" .. f)
     end
