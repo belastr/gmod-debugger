@@ -3,6 +3,26 @@ GMOD_DEBUGGER.logs = GMOD_DEBUGGER.logs || {}
 GMOD_DEBUGGER.options = GMOD_DEBUGGER.options || {}
 
 if CLIENT then
+    surface.CreateFont("GModDebuggerFont", {
+        font = "Arial",
+        size = 14,
+    })
+    surface.CreateFont("GModDebuggerFontBold", {
+        font = "Arial",
+        size = 14,
+        weight = 700,
+    })
+    surface.CreateFont("GModDebuggerFontHead", {
+        font = "Arial",
+        size = 17,
+        weight = 700,
+    })
+    surface.CreateFont("GModDebuggerFontTitle", {
+        font = "Arial",
+        size = 25,
+        weight = 700,
+    })
+
     for _, f in ipairs(file.Find("gmod-debugger/derma/*.lua", "LUA")) do
         include("gmod-debugger/derma/" .. f)
     end
