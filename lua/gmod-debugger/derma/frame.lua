@@ -26,11 +26,11 @@ function PANEL:Init()
     end
 
     self.lblTitle:SetContentAlignment(6)
-    self.lblTitle:SetFont("CreditsText")
+    self.lblTitle:SetFont("GModDebuggerFontTitle")
     self.lblTitle:SetTextColor(Color(242, 249, 255))
 
     self.pathHome = vgui.Create("DButton", self)
-    self.pathHome:SetFont("Default")
+    self.pathHome:SetFont("GModDebuggerFontBold")
     self.pathHome:SetText("Home")
     self.pathHome.DoClick = function() self:SetPath("Home") end
     self.pathHome.Paint = function(btn)
@@ -123,14 +123,14 @@ function PANEL:SetPath(path)
     if path == "Home" then
         local slash = vgui.Create("DLabel", self.btnsPath)
         slash:Dock(LEFT)
-        slash:SetFont("Default")
+        slash:SetFont("GModDebuggerFont")
         slash:SetTextColor(Color(255, 255, 255, 153))
         slash:SetText(" / ")
         slash:SizeToContentsX()
         
         local btnHome = vgui.Create("DButton", self.btnsPath)
         btnHome:Dock(LEFT)
-        btnHome:SetFont("Default")
+        btnHome:SetFont("GModDebuggerFontBold")
         btnHome:SetTextColor(color_white)
         btnHome:SetText("gmod-debugger")
         btnHome:SizeToContentsX()
@@ -145,14 +145,14 @@ function PANEL:SetPath(path)
 
             local slash = vgui.Create("DLabel", self.btnsPath)
             slash:Dock(LEFT)
-            slash:SetFont("Default")
+            slash:SetFont("GModDebuggerFont")
             slash:SetTextColor(Color(255, 255, 255, 153))
             slash:SetText(" / ")
             slash:SizeToContentsX()
             
             local btn = vgui.Create("DButton", self.btnsPath)
             btn:Dock(LEFT)
-            btn:SetFont("Default")
+            btn:SetFont("GModDebuggerFontBold")
             btn:SetText(p)
             btn:SizeToContentsX()
             btn.DoClick = function() self:SetPath(str) end
@@ -174,7 +174,7 @@ function PANEL:SetPath(path)
         if i then
             local btnUp = vgui.Create("DButton", self.btnsPath)
             btnUp:Dock(RIGHT)
-            btnUp:SetFont("Default")
+            btnUp:SetFont("GModDebuggerFontBold")
             btnUp:SetText(">")
             btnUp:SizeToContentsX()
             if i < 255 then
@@ -194,14 +194,14 @@ function PANEL:SetPath(path)
 
             local num = vgui.Create("DLabel", self.btnsPath)
             num:Dock(RIGHT)
-            num:SetFont("Default")
+            num:SetFont("GModDebuggerFontBold")
             num:SetTextColor(color_white)
             num:SetText(" " .. i .. " ")
             num:SizeToContentsX()
 
             local btnDown = vgui.Create("DButton", self.btnsPath)
             btnDown:Dock(RIGHT)
-            btnDown:SetFont("Default")
+            btnDown:SetFont("GModDebuggerFontBold")
             btnDown:SetText("<")
             btnDown:SizeToContentsX()
             if i > 1 then

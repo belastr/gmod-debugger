@@ -4,7 +4,7 @@ function PANEL:Init()
     self.altLine = false
 
     self.columnTime = vgui.Create("DLabel", self)
-    self.columnTime:SetFont("Default")
+    self.columnTime:SetFont("GModDebuggerFont")
     self.columnTime:SetContentAlignment(5)
     self.columnTime.Paint = function(_, w, h)
         surface.SetDrawColor(144, 190, 239)
@@ -12,7 +12,7 @@ function PANEL:Init()
     end
 
     self.columnID = vgui.Create("DLabel", self)
-    self.columnID:SetFont("Default")
+    self.columnID:SetFont("GModDebuggerFont")
     self.columnID:SetTextColor(Color(0, 130, 255))
     self.columnID:SetContentAlignment(5)
     self.columnID.Paint = function(_, w, h)
@@ -21,7 +21,7 @@ function PANEL:Init()
     end
 
     self.columnLength = vgui.Create("DLabel", self)
-    self.columnLength:SetFont("Default")
+    self.columnLength:SetFont("GModDebuggerFont")
     self.columnLength:SetTextColor(Color(0, 130, 255))
     self.columnLength:SetContentAlignment(5)
     self.columnLength.Paint = function(_, w, h)
@@ -30,7 +30,7 @@ function PANEL:Init()
     end
 
     self.columnText = vgui.Create("DLabel", self)
-    self.columnText:SetFont("Default")
+    self.columnText:SetFont("GModDebuggerFont")
     self.columnText:SetTextColor(Color(0, 130, 255))
     self.columnText:SetContentAlignment(4)
     self.columnText:SetTextInset(5, 0)
@@ -40,7 +40,7 @@ function PANEL:Init()
     end
 
     self.columnCount = vgui.Create("DLabel", self)
-    self.columnCount:SetFont("Default")
+    self.columnCount:SetFont("GModDebuggerFont")
     self.columnCount:SetTextColor(Color(0, 130, 255))
     self.columnCount:SetContentAlignment(5)
     self.columnCount.Paint = function(_, w, h)

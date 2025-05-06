@@ -30,7 +30,7 @@ function PANEL:Init()
 
     self.text = vgui.Create("DLabel", self)
     self.text:Dock(FILL)
-    self.text:SetFont("Default")
+    self.text:SetFont("GModDebuggerFontBold")
     self.text:SetTextColor(Color(51, 51, 51))
     self.text:SetText("")
 end
