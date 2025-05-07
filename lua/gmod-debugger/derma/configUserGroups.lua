@@ -47,9 +47,9 @@ function PANEL:Init()
             for _, ply in ipairs(player.GetHumans()) do
                 local group = ply:GetUserGroup()
                 if addedGroups[group] || self.value[group] then continue end
+                addedGroups[group] = true
                 m:AddOption(group, function()
                     popup.list:AddLine(group)
-                    addedGroups[group] = true
                     self.value[group] = true
                 end)
             end
