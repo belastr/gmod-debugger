@@ -35,14 +35,14 @@ hook.Add("gmod-debugger:saveLog", "gmod-debugger:performance", function(mod, log
             local content = os.date("[%m/%d %H:%M:%S] ", log.time)
 
             content = content .. "clients average fps: "
-            if log.client != 0 then
+            if log.client && log.client != 0 then
                 content = content .. log.client
             else
                 content = content .. "disabled"
             end
 
             content = content .. " - server tickrate: "
-            if log.server != 0 then
+            if log.server && log.server != 0 then
                 content = content .. log.server
             else
                 content = content .. "disabled"
