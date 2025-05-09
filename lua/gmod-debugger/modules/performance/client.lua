@@ -22,7 +22,7 @@ local function logs()
     info:DockMargin(0, 0, 5, 0)
     info:SetFont("GModDebuggerFontBold")
     info:SetTextColor(Color(51, 51, 51))
-    info:SetText("- means disabled")
+    info:SetText("average player fps | server tickrate (- means disabled)")
     info:SizeToContentsX()
 
     local logFile = vgui.Create("DButton", labels)
@@ -99,3 +99,8 @@ hook.Add("gmod-debugger:logs", "gmod-debugger:performance", function(mod, i, pan
         net.SendToServer()
     end
 end)
+
+language.Add("performance.client", "log average fps of players")
+language.Add("performance.clients", "log average fps of selected players (leave empty to log all players)")
+language.Add("performance.logfiles", "automatically generate a log file for each session")
+language.Add("performance.server", "log tickrate of server")
