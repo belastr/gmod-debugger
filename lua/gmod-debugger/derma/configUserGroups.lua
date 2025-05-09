@@ -58,7 +58,6 @@ function PANEL:Init()
                 "Add UserGroup", "Input the exact UserGroup name", "",
                 function(text)
                     popup.list:AddLine(text)
-                    addedGroups[group] = true
                     self.value[text] = true
                 end,
                 nil, "Add")
