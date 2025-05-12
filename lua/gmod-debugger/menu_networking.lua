@@ -54,10 +54,12 @@ function GMOD_DEBUGGER:InitModule(mod, cfg)
         GMOD_DEBUGGER.options[mod][c] = d[1]
     end
 
-    if GMOD_DEBUGGER.config[mod] then return end
+    if !GMOD_DEBUGGER.config[mod] then
+        GMOD_DEBUGGER.config[mod] = {}
+    end
 
-    GMOD_DEBUGGER.config[mod] = {}
     for c, d in pairs(cfg) do
+        if GMOD_DEBUGGER.config[mod][c] then continue end
         GMOD_DEBUGGER.config[mod][c] = d[2]
     end
 end
