@@ -77,7 +77,7 @@ function PANEL:Init()
 
         popup.OnClose = function()
             net.Start("gmod-debugger:config")
-            net.WriteString("Plys")
+            net.WriteString("Table")
             net.WriteString(self.module)
             net.WriteString(self.option)
             net.WriteTable(self.value)

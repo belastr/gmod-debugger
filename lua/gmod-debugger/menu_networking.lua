@@ -83,7 +83,7 @@ net.Receive("gmod-debugger:config", function(len, ply)
         if t == "Bool" then
             local mod, opt, val = net.ReadString(), net.ReadString(), net.ReadBool()
             GMOD_DEBUGGER:SetConfig(ply, mod, opt, val)
-        elseif t == "Plys" then
+        elseif t == "Table" then
             local mod, opt, val = net.ReadString(), net.ReadString(), net.ReadTable()
             GMOD_DEBUGGER:SetConfig(ply, mod, opt, val)
         end
