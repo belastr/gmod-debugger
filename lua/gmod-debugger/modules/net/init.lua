@@ -5,6 +5,7 @@ elseif SERVER then
     GMOD_DEBUGGER:InitModule("net", {
         client = {"Plys", {}},
         logfiles = {"Bool", false},
+        networkStringsBlacklist = {"Strings", {}},
         server = {"Bool", true}
     })
 

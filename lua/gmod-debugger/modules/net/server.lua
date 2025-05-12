@@ -9,7 +9,7 @@ function net.Incoming(len, client)
     len = len - 16
     func(len, client)
 
-    if GMOD_DEBUGGER.config.net.server && !string.StartsWith(strName, "gmod-debugger:") then
+    if GMOD_DEBUGGER.config.net.server && !GMOD_DEBUGGER.config.net.networkStringsBlacklist[strName] && !string.StartsWith(strName, "gmod-debugger:") then
         GMOD_DEBUGGER:SaveLog("net", {str = strName, count = 1, ply = client:SteamID(), time = os.time(), length = len + 16})
     end
 end

@@ -18,7 +18,7 @@ function net.Incoming(len, client)
     len = len - 16
     func(len, client)
 
-    if GMOD_DEBUGGER.config.net.client[LocalPlayer():SteamID()] && !string.StartsWith(strName, "gmod-debugger:") then
+    if GMOD_DEBUGGER.config.net.client[LocalPlayer():SteamID()] && !GMOD_DEBUGGER.config.net.networkStringsBlacklist[strName] && !string.StartsWith(strName, "gmod-debugger:") then
         if tmpLogs[1] && tmpLogs[1].str == strName then
             tmpLogs[1].count = tmpLogs[1].count + 1
         else
@@ -125,4 +125,5 @@ end)
 
 language.Add("net.client", "log net messages received by the selected clients (can potentially cause a lot of traffic)")
 language.Add("net.logfiles", "automatically generate a log file for each session")
+language.Add("net.networkStringsBlacklist", "do not log selected net messages")
 language.Add("net.server", "log net messages received on the serverside")
