@@ -101,7 +101,6 @@ end
 
 function PANEL:SetValue(val)
     self.value = val
-    PrintTable(val)
 end
 
 function PANEL:SetText(txt)
