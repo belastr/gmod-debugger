@@ -151,25 +151,6 @@ hook.Add("gmod-debugger:page", "gmod-debugger:menu", function(panel, path)
     end
 end)
 
-function GMOD_DEBUGGER:RequestConfig(init)
-    net.Start("gmod-debugger:config")
-    if init then
-        net.WriteBit(1)
-    end
-    net.SendToServer()
-end
-
-function GMOD_DEBUGGER:SendLog(mod, log)
-    log = util.Compress(util.TableToJSON(log))
-    local log_len = #log
-
-    net.Start("gmod-debugger:log", true)
-    net.WriteString(mod)
-    net.WriteUInt(log_len, 16)
-    net.WriteData(log, log_len)
-    net.SendToServer()
-end
-
 function GMOD_DEBUGGER:CreateLogFileFolders(mod)
     if !file.Exists("gmod-debugger", "DATA") then
         file.CreateDir("gmod-debugger")
@@ -181,38 +162,6 @@ function GMOD_DEBUGGER:CreateLogFileFolders(mod)
         file.CreateDir("gmod-debugger/logs/" .. mod)
     end
 end
-
-net.Receive("gmod-debugger:config", function(len)
-    local configData = net.ReadData(len / 8)
-    GMOD_DEBUGGER.config = util.JSONToTable(util.Decompress(configData), false, true)
-    
-    if !table.IsEmpty(GMOD_DEBUGGER.options) then return end
-    for mod, b in pairs(GMOD_DEBUGGER.config.enabledModules) do
-        if !b then continue end
-        include("gmod-debugger/modules/" .. mod .. "/init.lua")
-    end
-end)
-
-net.Receive("gmod-debugger:core", function(len)
-    local s = net.ReadUInt(3)
-    if s == 0 then
-        modules = net.ReadTable()
-        frame:SetPath("Home/enabledModules")
-    end
-end)
-
-net.Receive("gmod-debugger:options", function(len)
-    local optionsData = net.ReadData(len / 8)
-    GMOD_DEBUGGER.options = util.JSONToTable(util.Decompress(optionsData), false, true)
-end)
-
-net.Receive("gmod-debugger:log", function(len)
-    local mod, logs_len = net.ReadString(), net.ReadUInt(16)
-    local logs = net.ReadData(logs_len)
-    GMOD_DEBUGGER.logs[mod] = util.JSONToTable(util.Decompress(logs), false, true)
-
-    hook.Run("gmod-debugger:log", mod)
-end)
 
 language.Add("core.accessGroups", "UserGroups that can access the gmod-debugger (Add UserGroup can only find groups that are currently online, so you might need to enter them manually)")
 language.Add("core.accessUsers", "clients that can access the gmod-debugger")

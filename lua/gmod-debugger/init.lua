@@ -3,6 +3,7 @@ GMOD_DEBUGGER.logs = GMOD_DEBUGGER.logs || {}
 GMOD_DEBUGGER.options = GMOD_DEBUGGER.options || {}
 
 if CLIENT then
+
     surface.CreateFont("GModDebuggerFont", {
         font = "Arial",
         size = 14,
@@ -26,17 +27,26 @@ if CLIENT then
     for _, f in ipairs(file.Find("gmod-debugger/derma/*.lua", "LUA")) do
         include("gmod-debugger/derma/" .. f)
     end
+
     include("gmod-debugger/access.lua")
     include("gmod-debugger/menu.lua")
+    include("gmod-debugger/networking.lua")
+
 elseif SERVER then
+
     resource.AddWorkshop("3477086034")
 
     for _, f in ipairs(file.Find("gmod-debugger/derma/*.lua", "LUA")) do
         AddCSLuaFile("gmod-debugger/derma/" .. f)
     end
+
     AddCSLuaFile("gmod-debugger/access.lua")
     AddCSLuaFile("gmod-debugger/menu.lua")
+    AddCSLuaFile("gmod-debugger/networking.lua")
+
     include("gmod-debugger/access.lua")
-    include("gmod-debugger/menu_networking.lua")
-    include("gmod-debugger/chat_commands.lua")
+    include("gmod-debugger/commands.lua")
+    include("gmod-debugger/core.lua")
+    include("gmod-debugger/networking.lua")
+
 end
