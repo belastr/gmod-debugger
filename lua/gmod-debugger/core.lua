@@ -8,6 +8,14 @@ timer.Create("gmod-debugger:config", 5, 0, function()
 end)
 timer.Stop("gmod-debugger:config")
 
+hook.Add("ShutDown", "gmod-debugger:shutdown", function()
+    GMOD_DEBUGGER.config.enabledModules = table.Copy(GMOD_DEBUGGER.config.toBeEnabledModules)
+    GMOD_DEBUGGER.config.toBeEnabledModules = nil
+
+    if !file.Exists("gmod-debugger", "DATA") then file.CreateDir("gmod-debugger") end
+    file.Write("gmod-debugger/config.json", util.TableToJSON(GMOD_DEBUGGER.config, true))
+end)
+
 function GMOD_DEBUGGER:SetConfig(ply, mod, opt, val)
     if !GMOD_DEBUGGER:HasAccess(ply) then return end
 

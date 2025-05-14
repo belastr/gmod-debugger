@@ -42,6 +42,10 @@ elseif SERVER && GMOD_DEBUGGER then
     GMOD_DEBUGGER.config = util.JSONToTable(config, false, true)
     GMOD_DEBUGGER.sessionKey = key
 
+    if GMOD_DEBUGGER.config.toBeEnabledModules then
+        GMOD_DEBUGGER.config.enabledModules = table.Copy(GMOD_DEBUGGER.config.toBeEnabledModules)
+    end
+
     MsgD("loading debugger modules")
     for mod, b in pairs(GMOD_DEBUGGER.config.enabledModules) do
         if !b then continue end
@@ -51,6 +55,8 @@ elseif SERVER && GMOD_DEBUGGER then
     end
     MsgD("completed debugger modules")
     MsgD("")
+
+    GMOD_DEBUGGER.config.toBeEnabledModules = table.Copy(GMOD_DEBUGGER.config.enabledModules)
 
     MsgC(col, "#####################<\n")
 end

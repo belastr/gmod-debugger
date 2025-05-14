@@ -37,8 +37,8 @@ hook.Add("gmod-debugger:page", "gmod-debugger:menu", function(panel, path)
             for _, mod in SortedPairs(GMOD_DEBUGGER.installedModules) do
                 local btnConfig = vgui.Create("DebuggerConfigBool", panel)
                 btnConfig:SetText(mod)
-                btnConfig:SetValue(GMOD_DEBUGGER.config.enabledModules[mod])
-                btnConfig:SetModule("enabledModules")
+                btnConfig:SetValue(GMOD_DEBUGGER.config.toBeEnabledModules[mod])
+                btnConfig:SetModule("toBeEnabledModules")
                 btnConfig:SetOption(mod)
             end
             local bufferBottom = vgui.Create("Panel", panel)
