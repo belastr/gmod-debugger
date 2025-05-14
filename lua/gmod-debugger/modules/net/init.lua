@@ -6,7 +6,7 @@ elseif SERVER then
         client = {"Plys", {}},
         logfiles = {"Bool", false},
         networkStringsBlacklist = {"Strings", {}},
-        server = {"Bool", true}
+        server = {"Bool", false}
     })
 
     AddCSLuaFile("gmod-debugger/modules/net/client.lua")
