@@ -16,6 +16,12 @@ hook.Add("ShutDown", "gmod-debugger:shutdown", function()
     file.Write("gmod-debugger/config.json", util.TableToJSON(GMOD_DEBUGGER.config, true))
 end)
 
+hook.Add("gmod-debugger:post", "gmod-debugger:post", function(json)
+    /*
+    IMPLEMENT http.Post() or Socket
+    */
+end)
+
 function GMOD_DEBUGGER:SetConfig(ply, mod, opt, val)
     if !GMOD_DEBUGGER:HasAccess(ply) then return end
 
