@@ -146,7 +146,7 @@ elseif CLIENT then
     net.Receive("gmod-debugger:core", function(len)
         local s = net.ReadUInt(3)
         if s == 0 then
-            modules = net.ReadTable()
+            GMOD_DEBUGGER.installedModules = net.ReadTable()
             GMOD_DEBUGGER.frame:SetPath("Home/enabledModules")
         end
     end)

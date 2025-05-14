@@ -1,4 +1,4 @@
-local modules = modules || {}
+GMOD_DEBUGGER.installedModules = GMOD_DEBUGGER.installedModules || {}
 GMOD_DEBUGGER.frame = GMOD_DEBUGGER.frame || nil
 
 hook.Add("gmod-debugger:page", "gmod-debugger:menu", function(panel, path)
@@ -34,7 +34,7 @@ hook.Add("gmod-debugger:page", "gmod-debugger:menu", function(panel, path)
             local bufferTop = vgui.Create("Panel", panel)
             bufferTop:Dock(TOP)
             bufferTop:SetTall(20)
-            for _, mod in SortedPairs(modules) do
+            for _, mod in SortedPairs(GMOD_DEBUGGER.installedModules) do
                 local btnConfig = vgui.Create("DebuggerConfigBool", panel)
                 btnConfig:SetText(mod)
                 btnConfig:SetValue(GMOD_DEBUGGER.config.enabledModules[mod])
