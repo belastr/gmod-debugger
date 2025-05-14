@@ -48,7 +48,7 @@ function PANEL:Init()
 
     self:SetSize(ScrW() / 2, ScrH() / 1.5)
     self:Center()
-    self:SetTitle("gmod-debugger")
+    self:SetTitle("gmod-debugger (beta)")
     self:MakePopup()
 
     self:SetPath("Home")

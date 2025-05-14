@@ -152,6 +152,13 @@ hook.Add("gmod-debugger:page", "gmod-debugger:menu", function(panel, path)
                 s:SetTextColor(Color(51, 51, 51))
             end
         end
+
+        local beta = vgui.Create("DLabel", panel)
+        beta:SetPos(0, link:GetY() + link:GetTall() + 35)
+        beta:SetFont("GModDebuggerFont")
+        beta:SetTextColor(Color(51, 51, 51))
+        beta:SetText("This is a beta version of the gmod-debugger. If you find any bugs or have suggestions, please report them on the GitHub repository.")
+        beta:SizeToContents()
     end
 end)
 
