@@ -121,6 +121,10 @@ elseif CLIENT then
         net.SendToServer()
     end
 
+    net.Receive("gmod-debugger:menu", function()
+        GMOD_DEBUGGER.frame = vgui.Create("DebuggerFrame")
+    end)
+
     net.Receive("gmod-debugger:config", function(len)
         local configData = net.ReadData(len / 8)
         GMOD_DEBUGGER.config = util.JSONToTable(util.Decompress(configData), false, true)
@@ -136,7 +140,7 @@ elseif CLIENT then
         local s = net.ReadUInt(3)
         if s == 0 then
             modules = net.ReadTable()
-            frame:SetPath("Home/enabledModules")
+            GMOD_DEBUGGER.frame:SetPath("Home/enabledModules")
         end
     end)
 

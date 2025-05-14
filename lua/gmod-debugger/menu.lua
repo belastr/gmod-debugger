@@ -1,9 +1,5 @@
-local modules = modules or {}
-local frame
-
-net.Receive("gmod-debugger:menu", function()
-    frame = vgui.Create("DebuggerFrame")
-end)
+local modules = modules || {}
+GMOD_DEBUGGER.frame = GMOD_DEBUGGER.frame || nil
 
 hook.Add("gmod-debugger:page", "gmod-debugger:menu", function(panel, path)
     if !GMOD_DEBUGGER:HasAccess(LocalPlayer()) then return end
