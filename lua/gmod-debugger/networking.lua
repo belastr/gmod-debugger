@@ -115,6 +115,13 @@ elseif CLIENT then
         net.SendToServer()
     end
 
+    function GMOD_DEBUGGER:RequestLogs(mod, i)
+        net.Start("gmod-debugger:logs")
+        net.WriteString(mod)
+        net.WriteUInt(i, 12)
+        net.SendToServer()
+    end
+
     function GMOD_DEBUGGER:RequestModules()
         net.Start("gmod-debugger:core")
         net.WriteUInt(0, 3)

@@ -6,13 +6,14 @@ net.Receive("gmod-debugger:performance", function()
     end
 end)
 
-local page
 local function logs()
-    local bufferTop = vgui.Create("Panel", page)
+    if !GMOD_DEBUGGER.frame.page then return end
+
+    local bufferTop = vgui.Create("Panel", GMOD_DEBUGGER.frame.page)
     bufferTop:Dock(TOP)
     bufferTop:SetTall(20)
 
-    local labels = vgui.Create("Panel", page)
+    local labels = vgui.Create("Panel", GMOD_DEBUGGER.frame.page)
     labels:Dock(TOP)
     labels:DockMargin(0, 0, 0, 10)
     labels:SetTall(18)
@@ -73,12 +74,12 @@ local function logs()
     end
 
     for i, l in ipairs(GMOD_DEBUGGER.logs.performance) do
-        local log = vgui.Create("DebuggerPerformanceLog", page)
+        local log = vgui.Create("DebuggerPerformanceLog", GMOD_DEBUGGER.frame.page)
         log:SetData(l)
         log.altLine = i % 2 == 0
     end
 
-    local bufferBottom = vgui.Create("Panel", page)
+    local bufferBottom = vgui.Create("Panel", GMOD_DEBUGGER.frame.page)
     bufferBottom:Dock(TOP)
     bufferBottom:SetTall(20)
 end
@@ -86,17 +87,6 @@ end
 hook.Add("gmod-debugger:log", "gmod-debugger:performance", function(mod)
     if mod == "performance" then
         logs()
-    end
-end)
-
-hook.Add("gmod-debugger:logs", "gmod-debugger:performance", function(mod, i, panel)
-    if mod == "performance" then
-        page = panel
-
-        net.Start("gmod-debugger:logs")
-        net.WriteString("performance")
-        net.WriteUInt(tonumber(i), 12)
-        net.SendToServer()
     end
 end)
 

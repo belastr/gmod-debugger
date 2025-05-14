@@ -29,13 +29,14 @@ function net.Incoming(len, client)
     end
 end
 
-local page
 local function logs()
-    local bufferTop = vgui.Create("Panel", page)
+    if !GMOD_DEBUGGER.frame.page then return end
+
+    local bufferTop = vgui.Create("Panel", GMOD_DEBUGGER.frame.page)
     bufferTop:Dock(TOP)
     bufferTop:SetTall(20)
 
-    local labels = vgui.Create("Panel", page)
+    local labels = vgui.Create("Panel", GMOD_DEBUGGER.frame.page)
     labels:Dock(TOP)
     labels:DockMargin(0, 0, 0, 10)
     labels:SetTall(18)
@@ -96,12 +97,12 @@ local function logs()
         if last && l.time < last then break end
         if first && l.time > first then continue end
 
-        local log = vgui.Create("DebuggerNetLog", page)
+        local log = vgui.Create("DebuggerNetLog", GMOD_DEBUGGER.frame.page)
         log:SetData(l)
         log.altLine = i % 2 == 0
     end
 
-    local bufferBottom = vgui.Create("Panel", page)
+    local bufferBottom = vgui.Create("Panel", GMOD_DEBUGGER.frame.page)
     bufferBottom:Dock(TOP)
     bufferBottom:SetTall(20)
 end
@@ -109,17 +110,6 @@ end
 hook.Add("gmod-debugger:log", "gmod-debugger:net", function(mod)
     if mod == "net" then
         logs()
-    end
-end)
-
-hook.Add("gmod-debugger:logs", "gmod-debugger:net", function(mod, i, panel)
-    if mod == "net" then
-        page = panel
-
-        net.Start("gmod-debugger:logs")
-        net.WriteString("net")
-        net.WriteUInt(tonumber(i), 12)
-        net.SendToServer()
     end
 end)
 
