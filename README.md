@@ -3,9 +3,8 @@ A debugger tool with mainly in-game menus and lots of configuration. There are s
 
 ## Core Modules
 - Errors (serverside, all clients, selected client)
-- Net Messages (serverside, local client, selected client)
-- Performance (server tickrate, client fps)
-- Content Issues (server models, client models/materials/sounds)
+- Net Messages (serverside, selected client)
+- Performance (server tickrate, clients average fps)
 
 ## Examples
 (coming soon)
@@ -13,7 +12,7 @@ A debugger tool with mainly in-game menus and lots of configuration. There are s
 ## Usage
 In-game: say /gmod-debugger to open the main menu
 
-From Console (generating log files only): see console commands (coming soon)
+From Console: (coming soon)
 
 ## Installation
 1. Download one of the releases.
