@@ -104,6 +104,21 @@ elseif CLIENT then
         net.SendToServer()
     end
 
+    function GMOD_DEBUGGER:SetConfig(t, mod, opt, val)
+        net.Start("gmod-debugger:config")
+        net.WriteString(t)
+        net.WriteString(mod)
+        net.WriteString(opt)
+
+        if t == "Bool" then
+            net.WriteBool(val)
+        elseif t == "Table" then
+            net.WriteTable(val)
+        end
+    
+        net.SendToServer()
+    end
+
     function GMOD_DEBUGGER:SendLog(mod, log)
         log = util.Compress(util.TableToJSON(log))
         local log_len = #log

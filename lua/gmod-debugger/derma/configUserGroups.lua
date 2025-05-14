@@ -85,12 +85,7 @@ function PANEL:Init()
         end
 
         popup.OnClose = function()
-            net.Start("gmod-debugger:config")
-            net.WriteString("Table")
-            net.WriteString(self.module)
-            net.WriteString(self.option)
-            net.WriteTable(self.value)
-            net.SendToServer()
+            GMOD_DEBUGGER:SetConfig("Table", self.module, self.option, self.value)
         end
     end
     self.btn.Paint = function(s, w)

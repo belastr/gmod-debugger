@@ -11,12 +11,7 @@ function PANEL:Init()
     self.btn:SetText("")
     self.btn.DoClick = function()
         self.value = !self.value
-        net.Start("gmod-debugger:config")
-        net.WriteString("Bool")
-        net.WriteString(self.module)
-        net.WriteString(self.option)
-        net.WriteBool(self.value)
-        net.SendToServer()
+        GMOD_DEBUGGER:SetConfig("Bool", self.module, self.option, self.value)
     end
     self.btn.Paint = function(_, w)
         if self.value then
