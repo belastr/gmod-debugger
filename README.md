@@ -1,10 +1,15 @@
 # gmod-debugger
 A debugger tool with mainly in-game menus and lots of configuration. There are seperated modules that all aim to collect valuable information to then be accessible immediately in-game with options to also extract the information.
 
-## Core Modules
+## Modules
 - Errors (serverside, all clients, selected client)
 - Net Messages (serverside, selected client)
 - Performance (server tickrate, clients average fps)
+
+## Planned Modules
+- SQL/Database (serverside)
+- Data Files (serverside)
+- Console Commands (all clients)
 
 ## Examples
 (coming soon)
