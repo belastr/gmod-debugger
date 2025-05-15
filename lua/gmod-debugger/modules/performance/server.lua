@@ -2,7 +2,14 @@ local sum, amount, sv, t = 0, 0, 0, 0
 
 timer.Create("gmod-debugger:performance", 60, 0, function()
     if amount > 0 || sv > 0 then
-        GMOD_DEBUGGER:SaveLog("performance", {client = math.Truncate(sum / amount, 2), server = sv, time = t})
+        local c, s
+        if amount > 0 then
+            c = math.Truncate(sum / amount, 2)
+        end
+        if sv > 0 then
+            s = math.Truncate(sv, 2)
+        end
+        GMOD_DEBUGGER:SaveLog("performance", {client = c, server = s, time = t})
     end
     sum, amount, sv = 0, 0, 0
     if GMOD_DEBUGGER.config.performance.server || GMOD_DEBUGGER.config.performance.client then
